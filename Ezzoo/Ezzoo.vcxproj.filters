@@ -1,33 +1,71 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    <Filter Include="Ezzoo">
+      <UniqueIdentifier>{DC96240D-48AB-4CBE-112D-F01D7D0049EF}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    <Filter Include="Ezzoo\Events">
+      <UniqueIdentifier>{407368C3-2CD6-F767-D55B-301EC19DC3EA}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="Ezzoo\IamGui">
+      <UniqueIdentifier>{67D044CB-5333-D46F-FCB8-0C26E8FA9FF2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Ezzoo.h" />
     <ClInclude Include="src\Ezzoo\Application.h">
-      <Filter>Header Files</Filter>
+      <Filter>Ezzoo</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="src\Ezzoo\Core.h">
+      <Filter>Ezzoo</Filter>
     </ClInclude>
     <ClInclude Include="src\Ezzoo\EntryPoint.h">
-      <Filter>Header Files</Filter>
+      <Filter>Ezzoo</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ezzoo\Events\Event.h">
+      <Filter>Ezzoo\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Events\KeyEvent.h">
+      <Filter>Ezzoo\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Events\MouseEvent.h">
+      <Filter>Ezzoo\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Events\WindowEvent.h">
+      <Filter>Ezzoo\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\IamGui\ImGuiLayer.h">
+      <Filter>Ezzoo\IamGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Log.h">
+      <Filter>Ezzoo</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Layer.h" />
+    <ClInclude Include="src\LayerStack.h" />
+    <ClInclude Include="src\Platform\WindowsWindow.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Window.h" />
+    <ClInclude Include="src\ezpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ezzoo\Application.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Ezzoo</Filter>
     </ClCompile>
+    <ClCompile Include="src\Ezzoo\IamGui\ImGuiLayer.cpp">
+      <Filter>Ezzoo\IamGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Log.cpp">
+      <Filter>Ezzoo</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Layer.cpp" />
+    <ClCompile Include="src\LayerStack.cpp" />
+    <ClCompile Include="src\Platform\WindowsWindow.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ezpch.cpp" />
   </ItemGroup>
 </Project>
