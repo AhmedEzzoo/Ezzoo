@@ -1,5 +1,5 @@
 #pragma once
-#include "ezpch.h"
+
 
 #include "Ezzoo/Events/Event.h"
 namespace Ezzoo {

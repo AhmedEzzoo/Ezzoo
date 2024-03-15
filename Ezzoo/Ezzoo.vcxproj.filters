@@ -43,6 +43,7 @@
     <ClInclude Include="src\Ezzoo\Log.h">
       <Filter>Ezzoo</Filter>
     </ClInclude>
+    <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Layer.h" />
     <ClInclude Include="src\LayerStack.h" />
     <ClInclude Include="src\Platform\WindowsWindow.h">
@@ -66,6 +67,7 @@
     <ClCompile Include="src\Platform\WindowsWindow.cpp">
       <Filter>Platform</Filter>
     </ClCompile>
+    <ClCompile Include="src\WindowsInput.cpp" />
     <ClCompile Include="src\ezpch.cpp" />
   </ItemGroup>
 </Project>

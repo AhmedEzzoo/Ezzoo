@@ -1,8 +1,6 @@
 #pragma once
-
-#include "ezpch.h"
-
 #include "Layer.h"
+
 namespace Ezzoo {
 
 

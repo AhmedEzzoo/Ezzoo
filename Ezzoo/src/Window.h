@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ezpch.h"
+
 #include "Ezzoo/Events/Event.h"
 
 namespace Ezzoo {
@@ -28,6 +28,7 @@ namespace Ezzoo {
 
 		virtual unsigned int GetWidth() const = 0;
 		virtual unsigned int GetHeight() const = 0;
+		virtual void* GetNativeWindow() const = 0;
 
 		virtual void SetEventCallBack(const EventCallBack& callBack) = 0;
 

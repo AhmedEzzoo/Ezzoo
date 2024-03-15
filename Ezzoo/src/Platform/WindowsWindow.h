@@ -24,6 +24,8 @@ namespace Ezzoo {
 		virtual void SetVSync(bool enable) override;
 		virtual bool IsVSync() const override ;
 
+		inline virtual void* GetNativeWindow() const override { return m_Window; }
+
 	private :
 		void Init(const WindowProps& props);
 		void ShutDown();

@@ -24,7 +24,9 @@ project "Ezzoo"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"%{prj.name}/vendor/glm/glm/**.hpp",
+
 	}
 	links 
 	{
@@ -39,7 +41,8 @@ project "Ezzoo"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/GLFW/include",
 		"%{prj.name}/vendor/Glad/include",
-		"%{prj.name}/vendor/IamGui"
+		"%{prj.name}/vendor/IamGui",
+		"%{prj.name}/vendor/glm"
 	}
 
 	filter "system:windows"
@@ -84,10 +87,10 @@ project "SandBox"
 	
 	includedirs
 	{
-		"Ezzoo/vendor/spdlog/include",
 		"Ezzoo/src",
-		"Ezzoo/vendor"
-		
+		"Ezzoo/vendor/spdlog/include",
+		"Ezzoo/vendor",
+		"Ezzoo/vendor/glm"
 	}
 
 	links
