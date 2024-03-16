@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "Ezzoo/Events/WindowEvent.h"
 #include "LayerStack.h"
+
 namespace Ezzoo {
 
 	class Application
@@ -14,7 +15,7 @@ namespace Ezzoo {
 		virtual ~Application();
 		void Run();
 
-		Application* CreatApplication();
+		
 		void OnEvent(Event &event);
 		
 		void PushLayer(Layer* layer);
@@ -36,6 +37,8 @@ namespace Ezzoo {
 
 
 	};
+
+	Application* CreatApplication();
 
 }
 

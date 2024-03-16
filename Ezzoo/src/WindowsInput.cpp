@@ -11,9 +11,9 @@ namespace Ezzoo {
 		auto status = glfwGetKey(static_cast<GLFWwindow*>(Application::GetApplication().GetWindow().GetNativeWindow()), keyCode);
 		return status;
 	}
-	bool Input::IsMousePressed(int mouseCode)
+	bool Input::IsMousePressed(MouseCodes mouseCode)
 	{
-		auto status =glfwGetMouseButton(static_cast<GLFWwindow*>(Application::GetApplication().GetWindow().GetNativeWindow()), mouseCode);
+		auto status =glfwGetMouseButton(static_cast<GLFWwindow*>(Application::GetApplication().GetWindow().GetNativeWindow()), (int)mouseCode);
 		return status;
 	}
 	std::pair<float, float> Input::GetMousePosition()

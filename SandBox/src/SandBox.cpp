@@ -22,7 +22,15 @@ public :
 	}
 	virtual void OnEvent(Ezzoo::Event& event) override 
 	{
-		//EZZOO_CLIENT_TRACE("Example Layer Event {0}", event);
+		if (event.GetEventType() == Ezzoo::EventType::KeyPressed)
+		{
+
+			if(Ezzoo::Input::IsKeyPressed((int)EZZOO_KEY_TAB))
+			{
+		
+				EZZOO_CLIENT_TRACE("Example Layer Tab Key Pressed : {0}", event);
+			}
+		}
 	}
 
 private :
@@ -46,7 +54,7 @@ public :
 	}
 };
 
-Ezzoo::Application* CreatApplication()
+Ezzoo::Application* Ezzoo::CreatApplication()
 {
 	return new SandBox();
 }

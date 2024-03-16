@@ -6,7 +6,7 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 include "Ezzoo/vendor/GLFW"
 include "Ezzoo/vendor/Glad"
-include "Ezzoo/vendor/IamGui"
+include "Ezzoo/vendor/ImGuiDock"
 
 project "Ezzoo"
 	location "Ezzoo"
@@ -26,13 +26,14 @@ project "Ezzoo"
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
+		"%{prj.name}/vendor/glm/glm/**.inl"
 
 	}
 	links 
 	{
 		"GLFW",
 		"Glad",
-		"ImGui",
+		"ImGuiDock",
 		"opengl32.lib"
 	}
 	includedirs
@@ -41,7 +42,7 @@ project "Ezzoo"
 		"%{prj.name}/vendor/spdlog/include",
 		"%{prj.name}/vendor/GLFW/include",
 		"%{prj.name}/vendor/Glad/include",
-		"%{prj.name}/vendor/IamGui",
+		"%{prj.name}/vendor/ImGuiDock",
 		"%{prj.name}/vendor/glm"
 	}
 

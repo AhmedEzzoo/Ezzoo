@@ -1,4 +1,7 @@
 #pragma once
+#include "Ezzoo/MouseCodes.h"
+#include "Ezzoo/KeyCodes.h"
+
 
 namespace Ezzoo {
 
@@ -6,7 +9,7 @@ namespace Ezzoo {
 	{
 	public :
 		static bool IsKeyPressed(int keyCode);
-		static bool IsMousePressed(int mouseCode);
+		static bool IsMousePressed(MouseCodes mouseCode);
 
 		static std::pair<float, float> GetMousePosition();
 		static float GetMouseX();
