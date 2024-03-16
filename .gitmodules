@@ -7,3 +7,6 @@
 [submodule "Ezzoo/vendor/glm"]
 	path = Ezzoo/vendor/glm
 	url = https://github.com/g-truc/glm.git
+[submodule "Ezzoo/vendor/ImGui"]
+	path = Ezzoo/vendor/ImGui
+	url = https://github.com/ocornut/imgui.git
