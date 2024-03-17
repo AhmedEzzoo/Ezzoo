@@ -24,12 +24,8 @@ public :
 	{
 		if (event.GetEventType() == Ezzoo::EventType::KeyPressed)
 		{
-
-			if(Ezzoo::Input::IsKeyPressed((int)EZZOO_KEY_TAB))
-			{
-		
+			if (Ezzoo::Input::IsKeyPressed((int)EZZOO_KEY_TAB))
 				EZZOO_CLIENT_TRACE("Example Layer Tab Key Pressed : {0}", event);
-			}
 		}
 	}
 
@@ -45,7 +41,6 @@ public :
 	SandBox()
 	{
 		PushLayer(new ExampleLayer());
-		PushOverLayer(new Ezzoo::ImGuiLayer());
 	}
 
 	~SandBox()

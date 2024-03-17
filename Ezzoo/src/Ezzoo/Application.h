@@ -3,7 +3,7 @@
 #include "Window.h"
 #include "Ezzoo/Events/WindowEvent.h"
 #include "LayerStack.h"
-
+#include "IamGui/ImGuiLayer.h"
 namespace Ezzoo {
 
 	class Application
@@ -30,6 +30,7 @@ namespace Ezzoo {
 
 	private:
 		std::unique_ptr<Window> m_AppWindow;
+		ImGuiLayer* m_ImGuiLayer = nullptr;
 		LayerStack m_LayerStack;
 		bool m_Running{ true };
 

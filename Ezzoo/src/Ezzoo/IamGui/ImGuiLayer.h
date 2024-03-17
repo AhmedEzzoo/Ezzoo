@@ -15,22 +15,13 @@ namespace Ezzoo {
 		virtual ~ImGuiLayer();
 
 
-		void OnAttach();
-		void OnDetach();
-		void OnUpdate();
-		void OnEvent(Event& event);
+		void OnAttach() override;
+		void OnDetach() override;
+		void OnImGuiRender() override;
 
-	private :
-		bool OnMouseMoveEvent(MouseMoveEvent& e);
-		bool OnMouseMoveScrolledEvent(MouseScrolledEvent& e);
-		bool OnMousePressedEvent(MousePressedEvent& e);
-		bool OnMouseReleasedEvent(MouseReleasedEvent& e);
-		bool OnKeyPressedEvent(KeyPressedEvent& e);
-		bool OnKeyReleasedEvent(KeyReleasedEvent& e);
-		bool OnKeyTypedEvent(KeyTypedEvent& e);
-		bool OnWindowClosedEvent(WindowCloseEvent& e);
-		bool OnWindowResizedEvent(WindowResizedEvent& e);
-		bool OnWindowMovedEvent(WindowMovedEvent& e);
+
+		void Begin();
+		void End();
 
 	private :
 		float m_Time{ 0.0f };

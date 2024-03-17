@@ -20,7 +20,6 @@ namespace Ezzoo {
 
 	}
 
-
 	void ImGuiLayer::OnAttach()
 	{
 		ImGui::CreateContext();
@@ -60,119 +59,44 @@ namespace Ezzoo {
 	}
 	void ImGuiLayer::OnDetach()
 	{
-
+		// Cleanup
+		ImGui_ImplOpenGL3_Shutdown();
+		ImGui_ImplGlfw_Shutdown();
+		ImGui::DestroyContext();
+		glfwDestroyWindow(static_cast<GLFWwindow*>(Application::GetApplication().GetWindow().GetNativeWindow()));
+		glfwTerminate();
 	}
-	void ImGuiLayer::OnUpdate()
+	
+
+	void ImGuiLayer::Begin()
+	{
+		ImGui_ImplOpenGL3_NewFrame();
+		ImGui_ImplGlfw_NewFrame();
+		ImGui::NewFrame();
+	}
+	void ImGuiLayer::End()
 	{
 		ImGuiIO& io = ImGui::GetIO();
 		Application& app = Application::GetApplication();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 
-		float time = (float)glfwGetTime();
-		io.DeltaTime = m_Time > 0.0f ? (time - m_Time) : (1.0f) / (60.0f);
-		m_Time = time;
-
-		// Start the Dear ImGui frame
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui::NewFrame();
-
-		static bool show = true;
-		ImGui::ShowDemoWindow(&show);
-
+		// Rendering
 		ImGui::Render();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-	}
-	void ImGuiLayer::OnEvent(Event& e)
-	{
-		EventDispatcher dispatcher(e);
 
-		dispatcher.Dispatch<MouseMoveEvent>(EZZOO_BIND(ImGuiLayer::OnMouseMoveEvent));
-		dispatcher.Dispatch<MouseScrolledEvent>(EZZOO_BIND(ImGuiLayer::OnMouseMoveScrolledEvent));
-		dispatcher.Dispatch<MousePressedEvent>(EZZOO_BIND(ImGuiLayer::OnMousePressedEvent));
-		dispatcher.Dispatch<MouseReleasedEvent>(EZZOO_BIND(ImGuiLayer::OnMouseReleasedEvent));
-
-		dispatcher.Dispatch<KeyPressedEvent>(EZZOO_BIND(ImGuiLayer::OnKeyPressedEvent));
-		dispatcher.Dispatch<KeyReleasedEvent>(EZZOO_BIND(ImGuiLayer::OnKeyReleasedEvent));
-		dispatcher.Dispatch <KeyTypedEvent>(EZZOO_BIND(ImGuiLayer::OnKeyTypedEvent));
-
-		dispatcher.Dispatch<WindowCloseEvent>(EZZOO_BIND(ImGuiLayer::OnWindowClosedEvent));
-		dispatcher.Dispatch<WindowResizedEvent>(EZZOO_BIND(ImGuiLayer::OnWindowResizedEvent));
-		dispatcher.Dispatch<WindowMovedEvent>(EZZOO_BIND(ImGuiLayer::OnWindowMovedEvent));
-	}
-
-	bool ImGuiLayer::OnMouseMoveEvent(MouseMoveEvent& e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MousePos = ImVec2(e.GetXPos(), e.GetYPos());
-
-		return false;
-	}
-	bool ImGuiLayer::OnMouseMoveScrolledEvent(MouseScrolledEvent& e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseWheel += e.GetYoffset();
-		io.MouseWheelH += e.GetXoffset();
-
-		return false;
-	}
-	bool ImGuiLayer::OnMousePressedEvent(MousePressedEvent& e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.GetMouseButton()] = true;
-		
-		return false;
-	}
-	bool ImGuiLayer::OnMouseReleasedEvent(MouseReleasedEvent& e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.MouseDown[e.GetMouseButton()] = false;
-
-		return false;
-	}
-	bool ImGuiLayer::OnKeyPressedEvent(KeyPressedEvent& e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.KeysDown[e.GetKeyCode()] = true;
-
-
-		io.KeyCtrl = io.KeysDown[GLFW_KEY_LEFT_CONTROL] || io.KeysDown[GLFW_KEY_RIGHT_CONTROL];
-		io.KeyShift = io.KeysDown[GLFW_KEY_LEFT_SHIFT] || io.KeysDown[GLFW_KEY_RIGHT_SHIFT];
-		io.KeyAlt = io.KeysDown[GLFW_KEY_LEFT_ALT] || io.KeysDown[GLFW_KEY_RIGHT_ALT];
-		io.KeySuper = io.KeysDown[GLFW_KEY_LEFT_SUPER] || io.KeysDown[GLFW_KEY_RIGHT_SUPER];
-
-		return false;
-	}
-	bool ImGuiLayer::OnKeyReleasedEvent(KeyReleasedEvent& e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.KeysDown[e.GetKeyCode()] = false;
-
-		return false;
-	}
-	bool ImGuiLayer::OnKeyTypedEvent(KeyTypedEvent& e)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		unsigned int keyCode = (unsigned int)e.GetKeyCode();
-
-		if (keyCode > 0 && keyCode < 0x10000)
+		if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
 		{
-			io.AddInputCharacter(keyCode);
+			GLFWwindow* backup_current_context = glfwGetCurrentContext();
+			ImGui::UpdatePlatformWindows();
+			ImGui::RenderPlatformWindowsDefault();
+			glfwMakeContextCurrent(backup_current_context);
 		}
+	}
 
-		return false;
-	}
-	bool ImGuiLayer::OnWindowResizedEvent(WindowResizedEvent& e)
+	void ImGuiLayer::OnImGuiRender()
 	{
-		ImGuiIO& io = ImGui::GetIO();
-		io.DisplaySize = ImVec2((float)e.GetWindowWidth(), (float)e.GetWindowHeight());
-		return false;
+		static bool show{ true };
+		ImGui::ShowDemoWindow(&show);
 	}
-	bool ImGuiLayer::OnWindowMovedEvent(WindowMovedEvent& e)
-	{
-		return false;
-	}
-	bool ImGuiLayer::OnWindowClosedEvent(WindowCloseEvent& e)
-	{
-		return false;
-	}
+
 }

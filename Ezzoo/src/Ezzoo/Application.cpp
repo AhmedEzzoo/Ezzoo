@@ -7,21 +7,23 @@
 namespace Ezzoo {
 
 	Application* Application::s_Instance = nullptr;
+
 	Application::Application()
 	{
 		if (s_Instance) return;
 		s_Instance = this;
+
 		m_AppWindow = std::unique_ptr<Window>(Window::Create());
 		m_AppWindow->SetEventCallBack(EZZOO_BIND(Application::OnEvent));
+		
+		m_ImGuiLayer = new ImGuiLayer();
+		PushOverLayer(m_ImGuiLayer);
 
-		unsigned int id;
-
-		glGenVertexArrays(1, &id);
 
 	}
 	Application::~Application()
 	{
-
+		//delete m_ImGuiLayer;
 	}
 
 	Window&	Application::GetWindow()
@@ -69,9 +71,16 @@ namespace Ezzoo {
 			glClear(GL_COLOR_BUFFER_BIT);
 
 			for (Layer* layer : m_LayerStack)
-			{
 				layer->OnUpdate();
-			}
+			
+
+			m_ImGuiLayer->Begin();
+
+			for (Layer* layer : m_LayerStack)
+				layer->OnImGuiRender();
+
+			m_ImGuiLayer->End();
+
 			m_AppWindow->OnUpdate();
 		}
 	}
