@@ -75,8 +75,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ezpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -95,8 +95,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ezpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -119,8 +119,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ezpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -142,6 +142,7 @@
     <ClInclude Include="src\Ezzoo.h" />
     <ClInclude Include="src\Ezzoo\Application.h" />
     <ClInclude Include="src\Ezzoo\Core.h" />
+    <ClInclude Include="src\Ezzoo\Core\TimeStep.h" />
     <ClInclude Include="src\Ezzoo\EntryPoint.h" />
     <ClInclude Include="src\Ezzoo\Events\Event.h" />
     <ClInclude Include="src\Ezzoo\Events\KeyEvent.h" />
@@ -151,10 +152,26 @@
     <ClInclude Include="src\Ezzoo\KeyCodes.h" />
     <ClInclude Include="src\Ezzoo\Log.h" />
     <ClInclude Include="src\Ezzoo\MouseCodes.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\Buffers.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\OrthgraphicCameraController.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\OrthoGraphicCamera.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\Renderer.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\RendererAPI.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\RendererCommand.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\Shader.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\Texture.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\VertexArray.h" />
     <ClInclude Include="src\Input.h" />
     <ClInclude Include="src\Layer.h" />
     <ClInclude Include="src\LayerStack.h" />
-    <ClInclude Include="src\Platform\WindowsWindow.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Window.h" />
     <ClInclude Include="src\ezpch.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
@@ -573,18 +590,35 @@
     <ClInclude Include="vendor\glm\glm\vec3.hpp" />
     <ClInclude Include="vendor\glm\glm\vec4.hpp" />
     <ClInclude Include="vendor\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ezzoo\Application.cpp" />
     <ClCompile Include="src\Ezzoo\IamGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Ezzoo\Log.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\Buffers.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\OrthgraphicCameraController.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\OrthoGraphicCamera.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\Renderer.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\RendererAPI.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\RendererCommand.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\Shader.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Layer.cpp" />
     <ClCompile Include="src\LayerStack.cpp" />
-    <ClCompile Include="src\Platform\WindowsWindow.cpp" />
-    <ClCompile Include="src\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\ezpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="vendor\GLFW\GLFW.vcxproj">

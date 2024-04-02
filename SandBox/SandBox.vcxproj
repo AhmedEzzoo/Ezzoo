@@ -137,6 +137,10 @@
       <Project>{DC96240D-48AB-4CBE-112D-F01D7D0049EF}</Project>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\Logo.glsl" />
+    <None Include="assets\Texture.glsl" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

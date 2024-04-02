@@ -55,7 +55,7 @@ namespace Ezzoo {
 			return ss.str();
 		}
 
-		EVENT_CLASS_TYPE(WindowResize);
+		EVENT_CLASS_TYPE(WindowMoved);
 		EVENT_CLASS_CATEGORY(EventCategoryApplication);
 	private:
 		int m_XPos;

@@ -2,6 +2,8 @@
 
 
 #include "Ezzoo/Events/Event.h"
+
+#include "Ezzoo/Core/TimeStep.h"
 namespace Ezzoo {
 	
 	
@@ -14,7 +16,7 @@ namespace Ezzoo {
 
 		virtual void OnAttach () {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate () {}
+		virtual void OnUpdate (TimeStep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent (Event & event){}
 

@@ -26,6 +26,6 @@ namespace Ezzoo {
 #define EZZOO_CORE_TRACE(...)   ::Ezzoo::Log::GetCoreLogger()->trace(__VA_ARGS__)
 
 #define EZZOO_CLIENT_WARNING(...) ::Ezzoo::Log::GetClientLogger()->warn(__VA_ARGS__)
-#define EZZOO_CLIENT_INFO(...) ::Ezzoo::Log::GetClientLogger()->info(__VA_ARGS__)
-#define EZZOO_CLIENT_ERROR(...) ::Ezzoo::Log::GetClientLogger()->error(__VA_ARGS__)
-#define EZZOO_CLIENT_TRACE(...) ::Ezzoo::Log::GetClientLogger()->trace(__VA_ARGS__)
+#define EZZOO_CLIENT_INFO(...)	  ::Ezzoo::Log::GetClientLogger()->info(__VA_ARGS__)
+#define EZZOO_CLIENT_ERROR(...)   ::Ezzoo::Log::GetClientLogger()->error(__VA_ARGS__)
+#define EZZOO_CLIENT_TRACE(...)   ::Ezzoo::Log::GetClientLogger()->trace(__VA_ARGS__)

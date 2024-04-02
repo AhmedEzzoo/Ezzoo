@@ -5,7 +5,7 @@
 #include "Ezzoo/Events/MouseEvent.h"
 #include "Ezzoo/Events/KeyEvent.h"
 
-#include <glad/glad.h>
+#include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Ezzoo {
 
@@ -23,6 +23,7 @@ namespace Ezzoo {
 	WindowsWindow::~WindowsWindow()
 	{
 		ShutDown();
+		delete m_Context;
 	}
 
 	void WindowsWindow::Init(const WindowProps& props) 
@@ -41,9 +42,8 @@ namespace Ezzoo {
 		}
 
 		m_Window = glfwCreateWindow(m_Data.Width, m_Data.Height, m_Data.Title.c_str(), nullptr, nullptr);
-		glfwMakeContextCurrent(m_Window);
-		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
-		EZZOO_CORE_INFO("{0}", status);
+		m_Context = new OpenGLContext(m_Window);
+		m_Context->Init();
 		glfwSetWindowUserPointer(m_Window, &m_Data);
 		SetVSync(true);
 
@@ -138,7 +138,7 @@ namespace Ezzoo {
 	void WindowsWindow::OnUpdate()
 	{
 		glfwPollEvents();
-		glfwSwapBuffers(m_Window);
+		m_Context->SwapBuffers();
 	}
 
 	unsigned int WindowsWindow::GetWidth() const

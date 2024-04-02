@@ -20,7 +20,7 @@ project "GLad"
 	}
 	
 	filter "system:windows"
-		staticruntime "on"
+		systemversion "latest"
 
 	filter "configurations:Debug"
 		runtime "Debug"

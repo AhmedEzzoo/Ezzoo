@@ -3,7 +3,7 @@
 #include "Window.h"
 
 #include "GLFW/glfw3.h"
-
+#include "Ezzoo/Renderer/GraphicsContext.h"
 namespace Ezzoo {
 
 	class WindowsWindow : public Window
@@ -34,7 +34,7 @@ namespace Ezzoo {
 	private :
 
 		GLFWwindow* m_Window;
-		
+		GraphicsContext* m_Context;
 		struct WindowData
 		{
 			std::string Title;

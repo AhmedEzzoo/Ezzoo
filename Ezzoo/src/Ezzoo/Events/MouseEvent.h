@@ -35,7 +35,7 @@ namespace Ezzoo {
 		float GetYoffset() const { return m_YOffset; }
 
 		EVENT_CLASS_TYPE(MouseScrolled);
-		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput | EventCategoryMouseButton);
+		EVENT_CLASS_CATEGORY(EventCategoryMouse);
 
 		std::string ToString() const override
 		{
