@@ -4,6 +4,8 @@
 
 #include "imgui/imgui.h"
 
+#include "Sandbox2D.h"
+
 class ExampleLayer : public Ezzoo::Layer
 {
 
@@ -108,7 +110,8 @@ class SandBox : public Ezzoo::Application
 public :
 	SandBox()
 	{
-		PushLayer(new ExampleLayer());
+		//PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 
 	~SandBox()

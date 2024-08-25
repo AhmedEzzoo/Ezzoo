@@ -28,8 +28,17 @@
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scene">
+      <UniqueIdentifier>{0A06D2B3-7670-862A-BFAE-37D02B58647F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\entt">
+      <UniqueIdentifier>{DD8078C1-4936-F1B6-D22A-EB8D3EDFE7BA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\entt\include">
+      <UniqueIdentifier>{5035F37B-BC96-D089-4504-173CB1640749}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\glm">
       <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
@@ -57,17 +66,41 @@
     <ClInclude Include="src\Ezzoo.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\Application.h">
-      <Filter>src\Ezzoo</Filter>
+    <ClInclude Include="src\Ezzoo\Core\Application.h">
+      <Filter>src\Ezzoo\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\Core.h">
-      <Filter>src\Ezzoo</Filter>
+    <ClInclude Include="src\Ezzoo\Core\Core.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\EntryPoint.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\Input.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\Instrumentor.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\KeyCodes.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\Layer.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\LayerStack.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\Log.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\MouseCodes.h">
+      <Filter>src\Ezzoo\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ezzoo\Core\TimeStep.h">
       <Filter>src\Ezzoo\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\EntryPoint.h">
-      <Filter>src\Ezzoo</Filter>
+    <ClInclude Include="src\Ezzoo\Core\Window.h">
+      <Filter>src\Ezzoo\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Ezzoo\Events\Event.h">
       <Filter>src\Ezzoo\Events</Filter>
@@ -84,25 +117,25 @@
     <ClInclude Include="src\Ezzoo\IamGui\ImGuiLayer.h">
       <Filter>src\Ezzoo\IamGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\KeyCodes.h">
-      <Filter>src\Ezzoo</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ezzoo\Log.h">
-      <Filter>src\Ezzoo</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Ezzoo\MouseCodes.h">
-      <Filter>src\Ezzoo</Filter>
-    </ClInclude>
     <ClInclude Include="src\Ezzoo\Renderer\Buffers.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ezzoo\Renderer\FrameBuffer.h">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ezzoo\Renderer\GraphicsContext.h">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Renderer\OrthgraphicCameraController.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ezzoo\Renderer\OrthoGraphicCamera.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ezzoo\Renderer\Renderer.h">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Ezzoo\Renderer\Renderer2D.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Ezzoo\Renderer\RendererAPI.h">
@@ -114,22 +147,19 @@
     <ClInclude Include="src\Ezzoo\Renderer\Shader.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\Renderer\VertexArray.h">
+    <ClInclude Include="src\Ezzoo\Renderer\Texture.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Input.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Layer.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\LayerStack.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\Ezzoo\Renderer\VertexArray.h">
+      <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFrameBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer.h">
@@ -138,17 +168,29 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
-    <ClInclude Include="src\Window.h">
-      <Filter>src</Filter>
+    <ClInclude Include="src\Scene\Component.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\Entity.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\Scene.h">
+      <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\ezpch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\entt\include\entt.hpp">
+      <Filter>vendor\entt\include</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\glm\common.hpp">
       <Filter>vendor\glm\glm</Filter>
@@ -1401,27 +1443,40 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\Renderer\Texture.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
-    <ClInclude Include="src\Ezzoo\Renderer\OrthgraphicCameraController.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\Camera.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Ezzoo\Application.cpp">
-      <Filter>src\Ezzoo</Filter>
+    <ClCompile Include="src\Ezzoo\Core\Application.cpp">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Core\Layer.cpp">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Core\LayerStack.cpp">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Core\Log.cpp">
+      <Filter>src\Ezzoo\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\IamGui\ImGuiLayer.cpp">
       <Filter>src\Ezzoo\IamGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ezzoo\Log.cpp">
-      <Filter>src\Ezzoo</Filter>
-    </ClCompile>
     <ClCompile Include="src\Ezzoo\Renderer\Buffers.cpp">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Renderer\FrameBuffer.cpp">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Renderer\OrthgraphicCameraController.cpp">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\Renderer\OrthoGraphicCamera.cpp">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\Renderer\Renderer.cpp">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Renderer\Renderer2D.cpp">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\Renderer\RendererAPI.cpp">
@@ -1433,14 +1488,11 @@
     <ClCompile Include="src\Ezzoo\Renderer\Shader.cpp">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ezzoo\Renderer\VertexArray.cpp">
+    <ClCompile Include="src\Ezzoo\Renderer\Texture.cpp">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClCompile>
-    <ClCompile Include="src\Layer.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\LayerStack.cpp">
-      <Filter>src</Filter>
+    <ClCompile Include="src\Ezzoo\Renderer\VertexArray.cpp">
+      <Filter>src\Ezzoo\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1448,10 +1500,16 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFrameBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
@@ -1463,14 +1521,18 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\Entity.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\Scene.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\ezpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ezzoo\Renderer\Texture.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
-    <ClCompile Include="src\Ezzoo\Renderer\OrthgraphicCameraController.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\Camera.cpp" />
   </ItemGroup>
 </Project>

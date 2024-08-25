@@ -7,7 +7,7 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
-#include "Ezzoo/Application.h"
+#include "Ezzoo/Core/Application.h"
 namespace Ezzoo {
 
 
@@ -95,8 +95,8 @@ namespace Ezzoo {
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		static bool show{ true };
-		ImGui::ShowDemoWindow(&show);
+		/*static bool show{true};
+		ImGui::ShowDemoWindow(&show);*/
 	}
 
 }

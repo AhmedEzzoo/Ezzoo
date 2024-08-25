@@ -6,6 +6,7 @@ namespace Ezzoo {
 	class OpenGLVertexBuffer : public VertexBuffer
 	{
 	public :
+		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
 
 		virtual ~OpenGLVertexBuffer();
@@ -13,6 +14,7 @@ namespace Ezzoo {
 
 		virtual void Bind()  const override;
 		virtual void Unbind() const override;
+		virtual void SetData(const void* data, uint32_t dataSize) override;
 
 		virtual const BufferLayout& GetLayout() const override;
 		virtual void SetLayout(const BufferLayout& layout) override;

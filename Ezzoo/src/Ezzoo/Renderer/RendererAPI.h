@@ -26,7 +26,7 @@ namespace Ezzoo {
 		virtual void SetClearColor(const glm::vec4& color) = 0;
 		virtual void ClearColor() = 0;
 
-		virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray) = 0;
+		virtual void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount) = 0;
 
 		inline static API GetAPI() { return s_RendererAPI; }
 	private:

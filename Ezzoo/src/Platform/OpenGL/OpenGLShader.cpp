@@ -2,7 +2,7 @@
 
 #include "OpenGLShader.h"
 
-#include "Ezzoo/Core.h"
+#include "Ezzoo/Core/Core.h"
 #include "glad/glad.h"
 
 #include "glm/gtc/type_ptr.hpp"
@@ -212,6 +212,52 @@ namespace Ezzoo {
 		}
 
 		return locationVal;
+	}
+
+	void OpenGLShader::SetFloat(const std::string& name, float value)
+	{
+		UploadUniformFloat(name, value);
+	}
+
+	void OpenGLShader::SetFloat2(const std::string& name, const glm::vec2& values)
+	{
+		UploadUniformFloat2(name, values);
+	}
+
+	void OpenGLShader::SetFloat3(const std::string& name, const glm::vec3& values)
+	{
+		UploadUniformFloat3(name, values);
+	}
+
+	void OpenGLShader::SetFloat4(const std::string& name, const glm::vec4& values)
+	{
+		UploadUniformFloat4(name, values);
+	}
+
+	void OpenGLShader::SetInt(const std::string& name, int value)
+	{
+		UploadUniformInt(name, value);
+	}
+
+	void OpenGLShader::SetIntArr(const std::string& name, int* arrValue, uint32_t maxSize)
+	{
+		UploadUniformIntArr(name, arrValue, maxSize);
+	}
+
+	void OpenGLShader::SetMat3(const std::string& name, const glm::mat3& values)
+	{
+		UploadUniformMat3(name, values);
+	}
+
+	void OpenGLShader::SetMat4(const std::string& name, const glm::mat4& values)
+	{
+		UploadUniformMat4(name, values);
+	}
+
+	void OpenGLShader::UploadUniformIntArr(const std::string& name, int* arrValue, uint32_t maxSize)
+	{
+		GLint locationVal = GetLocation(name);
+		glUniform1iv(locationVal, maxSize, arrValue);
 	}
 
 	void OpenGLShader::UploadUniformMat3(const std::string& name, const glm::mat3& values)

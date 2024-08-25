@@ -28,7 +28,8 @@ project "Ezzoo"
 		"%{prj.name}/vendor/stb_image/**.h",
 		"%{prj.name}/vendor/stb_image/**.cpp",
 		"%{prj.name}/vendor/glm/glm/**.hpp",
-		"%{prj.name}/vendor/glm/glm/**.inl"
+		"%{prj.name}/vendor/glm/glm/**.inl",
+		"%{prj.name}/vendor/entt/include/entt.hpp"
 
 	}
 	links 
@@ -52,7 +53,9 @@ project "Ezzoo"
 		"%{prj.name}/vendor/Glad/include",
 		"%{prj.name}/vendor/imgui",
 		"%{prj.name}/vendor/glm",
-		"%{prj.name}/vendor/stb_image"
+		"%{prj.name}/vendor/stb_image",
+		"%{prj.name}/vendor/entt/include"
+
 	}
 
 	filter "system:windows"
@@ -92,7 +95,8 @@ project "SandBox"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"Ezzoo/vendor/entt/include/entt.hpp"
 	}
 	
 	includedirs
@@ -100,7 +104,9 @@ project "SandBox"
 		"Ezzoo/src",
 		"Ezzoo/vendor/spdlog/include",
 		"Ezzoo/vendor",
-		"Ezzoo/vendor/glm"
+		"Ezzoo/vendor/glm",
+		"Ezzoo/vendor/entt/include"
+
 	}
 
 	links

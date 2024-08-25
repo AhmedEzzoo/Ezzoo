@@ -3,11 +3,13 @@
 #include "Log.h"
 #include <memory>
 
+//Bind Functions Lambda for Better performance 
 #define EZZOO_BIND(fn)  [this](auto &&...args) -> decltype(auto) { return this->fn(std::forward<decltype(args)>(args)...);}
 
 #define BIT(x) (1 << x)
 
 
+//Configuration 
 #ifdef EZZOO_DEBUG
 	#define EZZOO_ASSERT_ENABLE
 #endif
@@ -17,6 +19,12 @@
 #else 
 	#define EZZOO_CORE_ASSERT(x, y)
 #endif
+
+//Profile Enabling in Release configuration 
+#ifdef EZZOO_RELEASE 
+	#define EZZOO_PROFILE_ENABLE
+#endif
+
 
 namespace Ezzoo {
 

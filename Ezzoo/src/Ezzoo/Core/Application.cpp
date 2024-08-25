@@ -1,7 +1,7 @@
 #include "ezpch.h"
 #include "Application.h"
 #include "GLFW/glfw3.h"
-#include "Ezzoo/Core.h"
+#include "Ezzoo/Core/Core.h"
 
 #include "Ezzoo/Core/TimeStep.h"
 namespace Ezzoo {
@@ -94,6 +94,12 @@ namespace Ezzoo {
 		return *s_Instance;
 	}
 
+	void Application::Close()
+	{
+		m_Running = false;
+	}
+
+
 	bool Application::OnWindowResizedEvent(WindowResizedEvent& e)
 	{
 		if (e.GetWindowWidth() == 0 || e.GetWindowHeight() == 0)
@@ -115,5 +121,6 @@ namespace Ezzoo {
 		m_Running = false;
 		return true;
 	}
+
 
 }

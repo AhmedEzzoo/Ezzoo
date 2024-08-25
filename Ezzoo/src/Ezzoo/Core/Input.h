@@ -1,6 +1,6 @@
 #pragma once
-#include "Ezzoo/MouseCodes.h"
-#include "Ezzoo/KeyCodes.h"
+#include "Ezzoo/Core/MouseCodes.h"
+#include "Ezzoo/Core/KeyCodes.h"
 
 
 namespace Ezzoo {

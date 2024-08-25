@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Ezzoo">
+      <UniqueIdentifier>{DC96240D-48AB-4CBE-112D-F01D7D0049EF}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ezzoo\vendor">
+      <UniqueIdentifier>{B95D8634-A5C0-15D9-4E46-4E8F3A88E15B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ezzoo\vendor\entt">
+      <UniqueIdentifier>{A39E1E9B-0FB5-1C31-582C-A852C481EDB8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Ezzoo\vendor\entt\include">
+      <UniqueIdentifier>{16B9A5CC-827B-D956-CB2B-68E3372DB234}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{2DAB880B-99B4-887C-2230-9F7C8E38947C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\Ezzoo\vendor\entt\include\entt.hpp">
+      <Filter>Ezzoo\vendor\entt\include</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Sandbox2D.h">
+      <Filter>src</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\SandBox.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Sandbox2D.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

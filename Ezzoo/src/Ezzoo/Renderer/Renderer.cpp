@@ -2,6 +2,7 @@
 
 #include "Renderer.h"
 #include "RendererCommand.h"
+#include "Renderer2D.h"
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
@@ -12,6 +13,8 @@ namespace Ezzoo {
 	void Renderer::Init()
 	{
 		RendererCommand::Init();
+
+		Renderer2D::Init();
 	}
 
 	void Renderer::BeginScene(OrthoGraphicCamera& camera)
@@ -34,6 +37,6 @@ namespace Ezzoo {
 		shader->Bind();
 		vertexArray->Bind();
 		std::dynamic_pointer_cast<OpenGLShader>(shader)->UploadUniformMat4("u_ViewProjection", s_Data->ViewProjection);
-		RendererCommand::DrawIndexed(vertexArray);
+		RendererCommand::DrawIndexed(vertexArray, 0);
 	}
 }

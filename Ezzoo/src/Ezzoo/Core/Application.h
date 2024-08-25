@@ -5,7 +5,7 @@
 #include "Ezzoo/Events/KeyEvent.h"
 
 #include "LayerStack.h"
-#include "IamGui/ImGuiLayer.h"
+#include "Ezzoo/IamGui/ImGuiLayer.h"
 
 #include "Ezzoo/Renderer/Renderer.h"
 
@@ -27,6 +27,8 @@ namespace Ezzoo {
 		void PushOverLayer(Layer* layer);
 
 		static Application& GetApplication();
+
+		void Close();
 
 		Window& GetWindow();
 

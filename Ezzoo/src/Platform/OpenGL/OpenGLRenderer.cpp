@@ -11,6 +11,7 @@ namespace Ezzoo {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
+		glEnable(GL_DEPTH_TEST);
 	}
 
 	void  OpenGLRenderer::SetViewPort(uint32_t x, uint32_t y, uint32_t width, uint32_t height)
@@ -28,8 +29,9 @@ namespace Ezzoo {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void OpenGLRenderer::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray)
+	void OpenGLRenderer::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount)
 	{
-		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		uint32_t count = indexCount ? vertexArray->GetIndexBuffer()->GetCount() : indexCount;
+		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
 	}
 }

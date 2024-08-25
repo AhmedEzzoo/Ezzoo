@@ -1,6 +1,6 @@
 #pragma once
 #include "ezpch.h"
-#include "Ezzoo/Core.h"
+#include "Ezzoo/Core/Core.h"
 
 namespace Ezzoo {
 
@@ -55,7 +55,7 @@ namespace Ezzoo {
 
 	class Event
 	{
-		friend class EventDispatcher;
+		//friend class EventDispatcher;
 	public :
 
 		virtual EventType GetEventType() const = 0;

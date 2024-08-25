@@ -13,7 +13,7 @@
 #include <utility>
 
 
-#include "Ezzoo/Log.h"
+#include "Ezzoo/Core/Log.h"
 
 #ifdef EZZOO_WINDOWS_64
 	#include <Windows.h>

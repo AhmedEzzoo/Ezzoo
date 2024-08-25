@@ -2,8 +2,8 @@
 
 #include "OrthgraphicCameraController.h"
 
-#include "Ezzoo/MouseCodes.h"
-#include "Input.h"
+#include "Ezzoo/Core/MouseCodes.h"
+#include "Ezzoo/Core/Input.h"
 
 namespace Ezzoo {
 

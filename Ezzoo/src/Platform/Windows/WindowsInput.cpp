@@ -1,6 +1,6 @@
 #include "ezpch.h"
-#include "Input.h"
-#include "Ezzoo/Application.h"
+#include "Ezzoo/Core/Input.h"
+#include "Ezzoo/Core/Application.h"
 #include "GLFW/glfw3.h"
 
 namespace Ezzoo {

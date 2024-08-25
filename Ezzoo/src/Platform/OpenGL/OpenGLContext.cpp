@@ -18,9 +18,12 @@ namespace Ezzoo {
 		glfwMakeContextCurrent(m_WindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 
-		//auto vendor = (void*)(glGetString(GL_VENDOR));
-
-		//EZZOO_CORE_INFO("OpenGL Renderer is : {0}", glGetString(GL_VENDOR));
+		if (status)
+		{
+			EZZOO_CORE_INFO("OpenGL Vendor is: {0}", reinterpret_cast<const char*>(glGetString(GL_VENDOR)));
+			EZZOO_CORE_INFO("OpenGL Renderer is: {0}", reinterpret_cast<const char*>(glGetString(GL_RENDERER)));
+			EZZOO_CORE_INFO("OpenGL Version is: {0}", reinterpret_cast<const char*>(glGetString(GL_VERSION)));
+		}
 
 
 	}
