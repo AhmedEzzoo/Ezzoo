@@ -28,10 +28,10 @@ void Sandbox2D::OnAttach()
 	m_GreenSquareEntity.AddComponent<Ezzoo::SpriteRendererComponent>(glm::vec4{0.2f, 0.8f, 0.3f, 1.0f});
 	
 	m_CameraEntity = m_ActiveScene->CreateEntity("Camera Entity");
-	m_CameraEntity.AddComponent<Ezzoo::CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+	m_CameraEntity.AddComponent<Ezzoo::CameraComponent>();
 
 	m_SecondCameraEntity = m_ActiveScene->CreateEntity("Clip Space Camera");
-	auto& cc = m_SecondCameraEntity.AddComponent<Ezzoo::CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+	auto& cc = m_SecondCameraEntity.AddComponent<Ezzoo::CameraComponent>();
 	cc.PrimaryCamera = false;
 }
 
@@ -53,6 +53,8 @@ void Sandbox2D::OnUpdate(Ezzoo::TimeStep ts)
 	Ezzoo::RendererCommand::ClearColor();
 
 	m_ActiveScene->OnUpdateEditor(ts);
+
+	m_ActiveScene->OnViewportResize((uint32_t)m_ViewPortSize.x, (uint32_t)m_ViewPortSize.y);
 
 	m_FrameBuffer->UnBind();
 }

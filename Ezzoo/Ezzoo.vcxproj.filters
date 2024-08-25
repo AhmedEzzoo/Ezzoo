@@ -1444,6 +1444,7 @@
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
     <ClInclude Include="src\Ezzoo\Renderer\Camera.h" />
+    <ClInclude Include="src\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ezzoo\Core\Application.cpp">
@@ -1534,5 +1535,6 @@
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

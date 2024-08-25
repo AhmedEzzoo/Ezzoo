@@ -37,6 +37,7 @@ private :
 	Ezzoo::Entity m_CameraEntity;
 	Ezzoo::Entity m_SecondCameraEntity;
 
+
 	bool m_PrimaryCamera = true;
 
 	glm::vec2 m_ViewPortSize = { 0.0f, 0.0f };

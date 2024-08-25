@@ -4,7 +4,7 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "Ezzoo/Renderer/Camera.h"
+#include "SceneCamera.h"
 
 
 #define GLM_ENABLE_EXPERIMENTAL
@@ -50,7 +50,7 @@ namespace Ezzoo {
 	struct CameraComponent
 	{
 
-		Ezzoo::Camera Camera;
+		Ezzoo::SceneCamera Camera;
 
 		bool PrimaryCamera = true;
 		bool FixedAspectRation = false;
@@ -58,9 +58,6 @@ namespace Ezzoo {
 
 		CameraComponent() = default;
 		CameraComponent(const CameraComponent & other) = default;
-		CameraComponent(const glm::mat4& projection) 
-			: Camera(projection)
-		{}
 	};
 
 
