@@ -131,9 +131,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="..\Ezzoo\vendor\entt\include\entt.hpp" />
+    <ClInclude Include="src\Panels\SceneHierarchyPanel.h" />
     <ClInclude Include="src\Sandbox2D.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp" />
     <ClCompile Include="src\SandBox.cpp" />
     <ClCompile Include="src\Sandbox2D.cpp" />
   </ItemGroup>

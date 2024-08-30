@@ -45,6 +45,10 @@ namespace Ezzoo {
 			m_Scene->m_Registry.remove<T>(m_Entity);
 		}
 
+		operator uint32_t()
+		{
+			return (uint32_t)m_Entity;
+		}
 
 	private :
 

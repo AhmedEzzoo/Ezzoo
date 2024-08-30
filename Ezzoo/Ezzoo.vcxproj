@@ -181,8 +181,9 @@
     <ClInclude Include="src\Scene\Component.h" />
     <ClInclude Include="src\Scene\Entity.h" />
     <ClInclude Include="src\Scene\Scene.h" />
-    <ClInclude Include="src\ezpch.h" />
     <ClInclude Include="src\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\ezpch.h" />
     <ClInclude Include="vendor\entt\include\entt.hpp" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -631,10 +632,10 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Scene\Entity.cpp" />
     <ClCompile Include="src\Scene\Scene.cpp" />
+    <ClCompile Include="src\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\ezpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Scene\SceneCamera.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>

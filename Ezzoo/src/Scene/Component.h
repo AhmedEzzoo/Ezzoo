@@ -5,7 +5,8 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 #include "SceneCamera.h"
-
+#include "ScriptableEntity.h"
+#include "Ezzoo/Core/TimeStep.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/quaternion.hpp"
@@ -68,6 +69,35 @@ namespace Ezzoo {
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent& other) = default;
 		SpriteRendererComponent(const glm::vec4& color) : Color(color) {}
+
+
+	};
+
+
+	struct NativeScriptComponent
+	{
+		ScriptableEntity* Instance = nullptr;
+
+		//NativeScriptComponent() = default;
+
+		std::function<void(void)> InstantiateScript ;
+		std::function<void(void)> DestroyInstanceFunc;
+
+/*
+
+		std::function<void(ScriptableEntity* script)> OnCreateFunc;
+		std::function<void(ScriptableEntity* script)> OnDestroyFunc;
+		std::function<void(ScriptableEntity* script, TimeStep ts)> OnUpdateFunc;*/
+
+
+		template <typename T>
+		void Bind()
+		{
+			InstantiateScript = [&]() { Instance = new T(); };
+			DestroyInstanceFunc = [&]() { delete Instance;  Instance = nullptr; };
+
+		}
+
 
 
 	};

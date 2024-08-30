@@ -111,7 +111,7 @@ public :
 	SandBox()
 	{
 		//PushLayer(new ExampleLayer());
-		PushLayer(new Sandbox2D());
+		PushLayer(new Ezzoo::Sandbox2D());
 	}
 
 	~SandBox()

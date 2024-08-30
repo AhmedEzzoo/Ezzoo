@@ -7,7 +7,7 @@
 namespace Ezzoo {
 
 	class Entity;
-
+	class SceneHierarchyPanel;
 	class Scene
 	{
 	public :
@@ -17,6 +17,8 @@ namespace Ezzoo {
 
 		Entity CreateEntity(const std::string& name = std::string());
 		void OnUpdateEditor(TimeStep ts);
+		void OnUpdateScript(TimeStep ts);
+
 
 		void OnViewportResize(uint32_t width, uint32_t height);
 
@@ -28,5 +30,8 @@ namespace Ezzoo {
 
 
 		friend class Entity;
+		friend class SceneHierarchyPanel;
+
+
 	};
 }

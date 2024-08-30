@@ -120,6 +120,9 @@
     <ClInclude Include="src\Ezzoo\Renderer\Buffers.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ezzoo\Renderer\Camera.h">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ezzoo\Renderer\FrameBuffer.h">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClInclude>
@@ -184,6 +187,12 @@
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Scene\Scene.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\SceneCamera.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene\ScriptableEntity.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\ezpch.h">
@@ -1443,8 +1452,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\Renderer\Camera.h" />
-    <ClInclude Include="src\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ezzoo\Core\Application.cpp">
@@ -1463,6 +1470,9 @@
       <Filter>src\Ezzoo\IamGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\Renderer\Buffers.cpp">
+      <Filter>src\Ezzoo\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Renderer\Camera.cpp">
       <Filter>src\Ezzoo\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\Renderer\FrameBuffer.cpp">
@@ -1528,13 +1538,14 @@
     <ClCompile Include="src\Scene\Scene.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Scene\SceneCamera.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\ezpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ezzoo\Renderer\Camera.cpp" />
-    <ClCompile Include="src\Scene\SceneCamera.cpp" />
   </ItemGroup>
 </Project>

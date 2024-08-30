@@ -40,6 +40,22 @@ namespace Ezzoo {
 
 	void Scene::OnUpdateEditor(TimeStep ts)
 	{
+		{
+
+			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) {
+
+				if (!nsc.Instance)
+				{
+					nsc.InstantiateScript();
+					nsc.Instance->m_Entity = Entity{ entity, this };
+					nsc.Instance->OnCreate();
+				}
+
+				nsc.Instance->OnUpdate(ts);
+
+				});
+
+		}
 		Ezzoo::Camera* mainCamera = nullptr;
 		glm::mat4* cameraTransform = nullptr;
 		{
@@ -75,6 +91,11 @@ namespace Ezzoo {
 		}
 	
 		
+	}
+
+	void Scene::OnUpdateScript(TimeStep ts)
+	{
+	
 	}
 
 
