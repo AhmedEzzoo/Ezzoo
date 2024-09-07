@@ -30,14 +30,14 @@ project "Ezzoo"
 		"%{prj.name}/vendor/glm/glm/**.hpp",
 		"%{prj.name}/vendor/glm/glm/**.inl",
 		"%{prj.name}/vendor/entt/include/entt.hpp"
-
 	}
 	links 
 	{
 		"GLFW",
 		"Glad",
 		"imgui",
-		"opengl32.lib"
+		"opengl32.lib",
+		--"yaml-cpp"
 	}
 
 	defines
@@ -54,7 +54,8 @@ project "Ezzoo"
 		"%{prj.name}/vendor/imgui",
 		"%{prj.name}/vendor/glm",
 		"%{prj.name}/vendor/stb_image",
-		"%{prj.name}/vendor/entt/include"
+		"%{prj.name}/vendor/entt/include",
+		--"%{prj.name}/vendor/yaml-cpp/include",
 
 	}
 

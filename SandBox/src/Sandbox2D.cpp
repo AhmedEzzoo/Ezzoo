@@ -177,7 +177,7 @@ namespace Ezzoo {
 
 
 
-		ImGui::DragFloat3("Camera Transform", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().Transform[3]), 0.1f, 0.0f, 0.0f, "%.2f");
+		ImGui::DragFloat3("Camera Transform", glm::value_ptr(m_CameraEntity.GetComponent<TransformComponent>().GetTransform()[3]), 0.1f, 0.0f, 0.0f, "%.2f");
 
 		if (ImGui::Checkbox("Primary Camera", &m_PrimaryCamera))
 		{

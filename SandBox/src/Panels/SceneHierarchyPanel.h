@@ -3,6 +3,7 @@
 #include "Ezzoo/Core/Core.h"
 
 #include "Scene/Scene.h"
+#include "Scene/Entity.h"
 
 namespace Ezzoo {
 
@@ -21,12 +22,13 @@ namespace Ezzoo {
 
 	private :
 		void DrawEntityNode(Entity entity);
+		void DrawComponents(Entity entity);
 
 
 	private :
 
 		Ref<Scene> m_Context;
-
+		Entity m_SelectedEntity;
 	};
 
 }
