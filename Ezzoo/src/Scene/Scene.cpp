@@ -69,7 +69,7 @@ namespace Ezzoo {
 				if (camera.PrimaryCamera)
 				{
 					mainCamera = &camera.Camera;
-					cameraTransform = &transform.Transform;
+					cameraTransform = &transform.GetTransform();
 					break;
 				}
 			}
@@ -85,7 +85,7 @@ namespace Ezzoo {
 			{
 				auto& [transform, color] = group.get<TransformComponent, SpriteRendererComponent>(entity);
 
-				Renderer2D::DrawQuad(transform, color.Color);
+				Renderer2D::DrawQuad(transform.GetTransform(), color.Color);
 			}
 			Renderer2D::EndScene();
 		}

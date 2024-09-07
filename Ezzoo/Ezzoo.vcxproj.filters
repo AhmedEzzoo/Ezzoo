@@ -192,6 +192,9 @@
     <ClInclude Include="src\Scene\SceneCamera.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Scene\SceneSerialize.h">
+      <Filter>src\Scene</Filter>
+    </ClInclude>
     <ClInclude Include="src\Scene\ScriptableEntity.h">
       <Filter>src\Scene</Filter>
     </ClInclude>
@@ -1539,6 +1542,9 @@
       <Filter>src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Scene\SceneCamera.cpp">
+      <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene\SceneSerialize.cpp">
       <Filter>src\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\ezpch.cpp">
