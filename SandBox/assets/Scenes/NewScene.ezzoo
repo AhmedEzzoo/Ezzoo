@@ -1,0 +1,56 @@
+Scene: Untitled
+Entities:
+  - Entity: 17894025284730244305
+    TagComponent:
+      Tag: Second_Square
+    TransformComponent:
+      Translation: [-0.0126856882, 0.172451526, 2.15596581]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      Texture: assets\Pictures\pic_2.png
+      TillingFactor: 1
+    BoxCollider 2D:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Denisty: 1
+      Friction: 0.5
+      Ristitution: 0
+      RistitutionThreshold: 0.5
+  - Entity: 2579359003956780486
+    TagComponent:
+      Tag: First_Square
+    TransformComponent:
+      Translation: [-0.153132975, 0.0107014216, -0.00814819336]
+      Rotation: [0, 0, 0]
+      Scale: [3.75513124, 4.34399986, 4.34399986]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      Texture: assets\Pictures\pic_1.png
+      TillingFactor: 5
+    BoxCollider 2D:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Denisty: 1
+      Friction: 0.5
+      Ristitution: 0
+      RistitutionThreshold: 0.5
+  - Entity: 4823302463330320530
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [-0.107645579, 0.440485597, 9.11999989]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PrespectiveFOV: 0.785398185
+        PrespectiveNear: 0.00999999978
+        PrespectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false

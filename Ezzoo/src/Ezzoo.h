@@ -1,10 +1,7 @@
 #pragma once
-
-
 #include "Ezzoo/Core/Application.h"
-
 #ifdef EZZOO_RELEASE
-	#include "Ezzoo/Core/EntryPoint.h"
+	//#include "Ezzoo/Core/EntryPoint.h"
 #endif
 
 #include "Ezzoo/Core/Instrumentor.h"
@@ -31,7 +28,10 @@
 #include "Scene/Entity.h"
 #include "Scene/Component.h"
 #include "Scene/ScriptableEntity.h"
+#include "Scene/SceneSerialize.h"
 
 #include "Ezzoo/IamGui/ImGuiLayer.h"
+
+#include "Ezzoo/Math/Math.h"
 
 

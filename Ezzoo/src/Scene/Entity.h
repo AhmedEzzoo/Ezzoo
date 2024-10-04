@@ -17,9 +17,19 @@ namespace Ezzoo {
 		T& AddComponent(ARGS &&...args)
 		{
 			T& component = m_Scene->m_Registry.emplace<T>(m_Entity, std::forward<ARGS>(args)...);
-
+			m_Scene->OnComponentAdded(*this, component);
 			return component;
 		}
+
+
+		template <typename T, typename ...ARGS>
+		T& AddOrReplaceComponent(ARGS &&...args)
+		{
+			T& component = m_Scene->m_Registry.emplace_or_replace<T>(m_Entity, std::forward<ARGS>(args)...);
+			m_Scene->OnComponentAdded(*this, component);
+			return component;
+		}
+
 
 		template <typename T>
 		T& GetComponent()
@@ -49,6 +59,11 @@ namespace Ezzoo {
 		{
 			return (uint32_t)m_Entity;
 		}
+		
+		operator entt::entity()
+		{
+			return m_Entity;
+		}
 
 		bool operator== (const Entity& other)
 		{
@@ -65,9 +80,11 @@ namespace Ezzoo {
 			return m_Entity != entt::null;
 		}
 
+
+
 	private :
 
-		entt::entity m_Entity = entt::null;
+		entt::entity m_Entity{ entt::null };
 		Scene* m_Scene = nullptr;
 
 	};

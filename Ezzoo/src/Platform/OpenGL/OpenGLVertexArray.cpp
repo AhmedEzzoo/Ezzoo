@@ -6,6 +6,30 @@
 
 namespace Ezzoo {
 
+	static GLenum ShaderDataTypeToGLBaseType(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case ShaderDataType::Float:		return GL_FLOAT;
+		case ShaderDataType::Float2:	return GL_FLOAT;
+		case ShaderDataType::Float3:	return GL_FLOAT;
+		case ShaderDataType::Float4:	return GL_FLOAT;
+		case ShaderDataType::Mat2:		return GL_FLOAT;
+		case ShaderDataType::Mat3:		return GL_FLOAT;
+		case ShaderDataType::Mat4:		return GL_FLOAT;
+		case ShaderDataType::Int:		return GL_INT;
+		case ShaderDataType::Int2:		return GL_INT;
+		case ShaderDataType::Int3:		return GL_INT;
+		case ShaderDataType::Int4:		return GL_INT;
+		case ShaderDataType::Bool:		return GL_BOOL;
+
+		}
+
+		return 0;
+	}
+
+
+
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
 		glCreateVertexArrays(1, &m_RendererID);
@@ -29,18 +53,84 @@ namespace Ezzoo {
 		glBindVertexArray(m_RendererID);
 		vertexBuffer->Bind();
 
-		uint32_t index = 0;
-		for (const auto& element : vertexBuffer->GetLayout())
+		
+		const auto& layout = vertexBuffer->GetLayout();
+
+#if 0		//uint32_t index = 0;
+		for (const auto& element : layout)
 		{
-			glEnableVertexAttribArray(index);
-			glVertexAttribPointer(index,
+			glEnableVertexAttribArray(m_VertwxBufferIndex);
+			glVertexAttribPointer(m_VertwxBufferIndex,
 				element.GetComponentCount(),
 				GL_FLOAT,
 				element.Normalized ? GL_TRUE : GL_FALSE,
-				vertexBuffer->GetLayout().GetStrid(),
+				layout.GetStrid(),
 				(const void*)element.Offset);
-			index++;
+			m_VertwxBufferIndex++;
 		}
+#endif	
+		for (const auto& element : layout)
+		{
+
+			switch (element.Type)
+			{
+			case ShaderDataType::Float:
+			case ShaderDataType::Float2:
+			case ShaderDataType::Float3:
+			case ShaderDataType::Float4:
+			{
+				glEnableVertexAttribArray(m_VertwxBufferIndex);
+				glVertexAttribPointer(m_VertwxBufferIndex,
+					element.GetComponentCount(),
+					GL_FLOAT,
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					layout.GetStrid(),
+					(const void*)element.Offset);
+				m_VertwxBufferIndex++;
+				break;
+			}
+			case ShaderDataType::Int:
+			case ShaderDataType::Int2:
+			case ShaderDataType::Int3:
+			case ShaderDataType::Int4:
+			case ShaderDataType::Bool:
+			{
+				glEnableVertexAttribArray(m_VertwxBufferIndex);
+				glVertexAttribPointer(m_VertwxBufferIndex,
+					element.GetComponentCount(),
+					GL_FLOAT,
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					layout.GetStrid(),
+					(const void*)element.Offset);
+				m_VertwxBufferIndex++;
+				break;
+			}
+			case ShaderDataType::Mat3:
+			case ShaderDataType::Mat4:
+			{
+				uint8_t count = element.GetComponentCount();
+				for (uint8_t i = 0; i < count; i++)
+				{
+					glEnableVertexAttribArray(m_VertwxBufferIndex);
+					glVertexAttribPointer(m_VertwxBufferIndex,
+						count,
+						GL_FLOAT,
+						element.Normalized ? GL_TRUE : GL_FALSE,
+						layout.GetStrid(),
+						reinterpret_cast<const void*>(element.Offset + sizeof(float) * count * i));
+					glVertexAttribDivisor(m_VertwxBufferIndex, 1);
+					m_VertwxBufferIndex++;
+				}
+			
+				break;
+			}
+
+
+			}
+
+		
+		}
+		
 
 		m_VertexBuffers.push_back(vertexBuffer);
 	}

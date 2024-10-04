@@ -8,6 +8,10 @@
 #include "backends/imgui_impl_opengl3.h"
 
 #include "Ezzoo/Core/Application.h"
+
+#include "ImGuizmo/ImGuizmo.h"
+
+
 namespace Ezzoo {
 
 
@@ -73,6 +77,7 @@ namespace Ezzoo {
 		ImGui_ImplOpenGL3_NewFrame();
 		ImGui_ImplGlfw_NewFrame();
 		ImGui::NewFrame();
+		ImGuizmo::BeginFrame();
 	}
 	void ImGuiLayer::End()
 	{
@@ -95,8 +100,18 @@ namespace Ezzoo {
 
 	void ImGuiLayer::OnImGuiRender()
 	{
-		/*static bool show{true};
-		ImGui::ShowDemoWindow(&show);*/
+		//static bool show{ true };
+		//ImGui::ShowDemoWindow(&show);
+	}
+
+	void ImGuiLayer::OnEvent(Event& event)
+	{
+		if (m_BlockEvents)
+		{
+			ImGuiIO& io = ImGui::GetIO();
+			event.m_Handeled |= event.IsInCategory(EventCategoryMouse) & io.WantCaptureMouse;
+			event.m_Handeled |= event.IsInCategory(EventCategoryKeyboard) & io.WantCaptureKeyboard;
+		}
 	}
 
 }

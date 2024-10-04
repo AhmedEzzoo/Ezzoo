@@ -75,11 +75,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ezpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMGUI_DEFINE_MATH_OPERATORS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\Box2D\include;..\..\..\Vulkan\Include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -87,7 +87,7 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;..\..\..\Vulkan\Lib\shaderc_sharedd.lib;..\..\..\Vulkan\Lib\spirv-cross-cored.lib;..\..\..\Vulkan\Lib\spirv-cross-glsld.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -95,14 +95,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ezpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMGUI_DEFINE_MATH_OPERATORS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\Box2D\include;..\..\..\Vulkan\Include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -111,7 +111,7 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;..\..\..\Vulkan\Lib\shaderc_shared.lib;..\..\..\Vulkan\Lib\spirv-cross-core.lib;..\..\..\Vulkan\Lib\spirv-cross-glsl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -119,14 +119,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>ezpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;IMGUI_DEFINE_MATH_OPERATORS;EZZOO_WINDOWS_64;GLFW_INCLUDE_NONE;EZZOO_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;vendor\spdlog\include;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\Box2D\include;..\..\..\Vulkan\Include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -151,14 +151,17 @@
     <ClInclude Include="src\Ezzoo\Core\Log.h" />
     <ClInclude Include="src\Ezzoo\Core\MouseCodes.h" />
     <ClInclude Include="src\Ezzoo\Core\TimeStep.h" />
+    <ClInclude Include="src\Ezzoo\Core\Timer.h" />
     <ClInclude Include="src\Ezzoo\Core\Window.h" />
     <ClInclude Include="src\Ezzoo\Events\Event.h" />
     <ClInclude Include="src\Ezzoo\Events\KeyEvent.h" />
     <ClInclude Include="src\Ezzoo\Events\MouseEvent.h" />
     <ClInclude Include="src\Ezzoo\Events\WindowEvent.h" />
     <ClInclude Include="src\Ezzoo\IamGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Ezzoo\Math\Math.h" />
     <ClInclude Include="src\Ezzoo\Renderer\Buffers.h" />
     <ClInclude Include="src\Ezzoo\Renderer\Camera.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Ezzoo\Renderer\FrameBuffer.h" />
     <ClInclude Include="src\Ezzoo\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Ezzoo\Renderer\OrthgraphicCameraController.h" />
@@ -169,6 +172,7 @@
     <ClInclude Include="src\Ezzoo\Renderer\RendererCommand.h" />
     <ClInclude Include="src\Ezzoo\Renderer\Shader.h" />
     <ClInclude Include="src\Ezzoo\Renderer\Texture.h" />
+    <ClInclude Include="src\Ezzoo\Renderer\UniformBuffer.h" />
     <ClInclude Include="src\Ezzoo\Renderer\VertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
@@ -176,6 +180,7 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLTexture2D.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLUniformBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Scene\Component.h" />
@@ -185,7 +190,8 @@
     <ClInclude Include="src\Scene\SceneSerialize.h" />
     <ClInclude Include="src\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\ezpch.h" />
-    <ClInclude Include="vendor\entt\include\entt.hpp" />
+    <ClInclude Include="src\Ezzoo\Core\UUID.h" />
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -610,8 +616,10 @@
     <ClCompile Include="src\Ezzoo\Core\LayerStack.cpp" />
     <ClCompile Include="src\Ezzoo\Core\Log.cpp" />
     <ClCompile Include="src\Ezzoo\IamGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Ezzoo\Math\Math.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\Buffers.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\Camera.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\FrameBuffer.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\OrthgraphicCameraController.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\OrthoGraphicCamera.cpp" />
@@ -621,6 +629,7 @@
     <ClCompile Include="src\Ezzoo\Renderer\RendererCommand.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\Shader.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Ezzoo\Renderer\UniformBuffer.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
@@ -628,6 +637,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture2D.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLUniformBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
@@ -637,6 +647,10 @@
     <ClCompile Include="src\Scene\SceneSerialize.cpp" />
     <ClCompile Include="src\ezpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Core\UUID.cpp" />
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo\ImGuizmo.cpp">
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
@@ -649,6 +663,12 @@
     </ProjectReference>
     <ProjectReference Include="vendor\imgui\imgui.vcxproj">
       <Project>{0098A80F-6CAC-D0C0-352E-7420A101CDF1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
+    </ProjectReference>
+    <ProjectReference Include="vendor\Box2D\Box2D.vcxproj">
+      <Project>{A434E80C-1049-10BE-D9CA-B31D459E0CEF}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

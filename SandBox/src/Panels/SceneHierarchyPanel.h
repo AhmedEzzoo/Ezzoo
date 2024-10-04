@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Ezzoo/Core/Core.h"
+//#include "Ezzoo/Core/Core.h"
 
 #include "Scene/Scene.h"
 #include "Scene/Entity.h"
@@ -19,6 +19,9 @@ namespace Ezzoo {
 		void SetContext(const Ref<Scene>& context);
 
 		void OnImGuiRender();
+
+		Entity GetSelectedEntity() const { return m_SelectedEntity; }
+		void SetSelectedEntity(Entity entity) { m_SelectedEntity = entity; }
 
 	private :
 		void DrawEntityNode(Entity entity);

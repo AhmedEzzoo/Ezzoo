@@ -1,11 +1,7 @@
-#include "Ezzoo.h"
 
-#include "Platform/OpenGL/OpenGLShader.h"
-
-#include "imgui/imgui.h"
-
-#include "Sandbox2D.h"
-
+#include "Sandbox.h"
+#include "Ezzoo/Core/EntryPoint.h"
+#if 0
 class ExampleLayer : public Ezzoo::Layer
 {
 
@@ -41,13 +37,13 @@ public :
 
 		auto chessBoardShader = m_ShaderLib.Load("Texture","assets/Texture.glsl");
 
-		m_Texture = Ezzoo::Texture2D::CreateTexture2D("assets/pic_1.png");
+		m_Texture = Ezzoo::Texture2D::CreateTexture2D("assets/Pictures/pic_1.png");
 		std::dynamic_pointer_cast<Ezzoo::OpenGLShader>(chessBoardShader)->UploadUniformInt("u_Texture", 0);
 
 
-		auto m_LogoShader = m_ShaderLib.Load("Logo", "assets/Logo.glsl");
+		auto m_LogoShader = m_ShaderLib.Load("Logo", "assets/Shaders/Logo.glsl");
 
-		m_LogoTexture = Ezzoo::Texture2D::CreateTexture2D("assets/pic_2.png");
+		m_LogoTexture = Ezzoo::Texture2D::CreateTexture2D("assets/Pictures/pic_2.png");
 		std::dynamic_pointer_cast<Ezzoo::OpenGLShader>(m_LogoShader)->UploadUniformInt("u_Texture", 0);
 
 	}
@@ -102,25 +98,31 @@ private :
 	Ezzoo::OrthgraphicCameraController m_CameraController;
 
 };
+#endif
 
-
-
-class SandBox : public Ezzoo::Application
-{
-public :
-	SandBox()
+namespace Ezzoo {
+	
+	SandBox::SandBox(const ApplicationSpecification& specs)
+		: Application (specs)
 	{
 		//PushLayer(new ExampleLayer());
-		PushLayer(new Ezzoo::Sandbox2D());
+		PushLayer(new Sandbox2D());
 	}
 
-	~SandBox()
+	SandBox::~SandBox()
 	{
 
 	}
-};
-
-Ezzoo::Application* Ezzoo::CreatApplication()
-{
-	return new SandBox();
 }
+
+Ezzoo::Application* Ezzoo::CreatApplication(ApplicationSpecification& specs)
+{
+	specs.Name = "SandBox";
+	specs.path  = "../SandBox";
+
+
+	return new SandBox(specs);
+}
+
+
+

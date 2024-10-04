@@ -6,8 +6,11 @@
 
 #include <glm/gtc/type_ptr.hpp>
 
+#include <filesystem>
+
 namespace Ezzoo {
 
+	extern const std::filesystem::path s_AssetsDirectory;
 
 	SceneHierarchyPanel::SceneHierarchyPanel(const Ref<Scene>& context)
 	{
@@ -17,33 +20,36 @@ namespace Ezzoo {
 	void SceneHierarchyPanel::SetContext(const Ref<Scene>& context)
 	{
 		m_Context = context;
+		m_SelectedEntity = {};
 	}
 
 
 	void SceneHierarchyPanel::OnImGuiRender()
 	{
-
 		ImGui::Begin("SceneHeirarchyPanel");
-
-		 m_Context->m_Registry.each([&](auto entityID) {
-
-
-				Entity ent { entityID, m_Context.get() };
-				DrawEntityNode(ent);});
-
-		if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0))
+		if (m_Context) 
 		{
-					m_SelectedEntity = {};
-		}
+			m_Context->m_Registry.each([&](auto entityID) {
 
-		if (ImGui::BeginPopupContextWindow(0, 1))
-		{
-			if (ImGui::MenuItem("Create Empty Entity"))
-				m_Context->CreateEntity("Empty Entity");
 
-			ImGui::EndPopup();
+				Entity ent{ entityID, m_Context.get() };
+				DrawEntityNode(ent); });
+
+			if (ImGui::IsWindowHovered() && ImGui::IsMouseClicked(0))
+			{
+				m_SelectedEntity = {};
+			}
+
+			if (ImGui::BeginPopupContextWindow(0, 1))
+			{
+				if (ImGui::MenuItem("Create Empty Entity"))
+					m_Context->CreateEntity("Empty Entity");
+
+				ImGui::EndPopup();
+			}
+
 		}
-		 
+		
 		ImGui::End();
 
 
@@ -66,16 +72,39 @@ namespace Ezzoo {
 
 	void SceneHierarchyPanel::DrawEntityNode(Entity entity)
 	{
-		auto& tag = entity.GetComponent<TagComponent>();
+		auto& tag = entity.GetComponent<TagComponent>().TagName;
 		ImGuiTreeNodeFlags flags = ((m_SelectedEntity == entity) ? ImGuiTreeNodeFlags_Selected : 0) | ImGuiTreeNodeFlags_OpenOnArrow;
 		flags |= ImGuiTreeNodeFlags_SpanAvailWidth;
 
-		if (ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags ,tag.TagName.c_str()))
+		bool opened = ImGui::TreeNodeEx((void*)(uint64_t)(uint32_t)entity, flags, tag.c_str());
+		
+		if (ImGui::IsItemClicked()) m_SelectedEntity = entity;
+
+		bool entityDeleted = false;
+		if (ImGui::BeginPopupContextItem())
 		{
-			ImGui::Text("%s", tag.TagName.c_str());
+			if (ImGui::MenuItem("Delete Entity"))
+				entityDeleted = true;
+
+			ImGui::EndPopup();
+		}
+
+		if (opened)
+		{
+			ImGuiTreeNodeFlags flags = ImGuiTreeNodeFlags_OpenOnArrow | ImGuiTreeNodeFlags_SpanAvailWidth;
+
+			bool opened = ImGui::TreeNodeEx((void*)9817239, flags, tag.c_str());
+			if (opened)
+				ImGui::TreePop();
 			ImGui::TreePop();
 		}
-		if (ImGui::IsItemClicked()) m_SelectedEntity = entity;
+
+		if (entityDeleted)
+		{
+			m_Context->DestroyEntity(entity);
+			if (m_SelectedEntity == entity)
+				m_SelectedEntity = {};
+		}
 
 	}
 
@@ -84,6 +113,8 @@ namespace Ezzoo {
 		ImGuiIO& io = ImGui::GetIO();
 
 		auto boldFont = io.Fonts->Fonts[0];
+
+		//resetValue = (label == "Scale") ? 1.0f : 0.0f;
 
 		ImGui::PushID(label.c_str());
 
@@ -208,9 +239,9 @@ namespace Ezzoo {
 			auto& tag = entity.GetComponent<TagComponent>().TagName;
 			char buf[256];
 			memset(buf, 0, sizeof(buf));
-			strcpy_s(buf, 256, tag.c_str());
+			strncpy(buf, tag.c_str(), sizeof(buf));
 			
-			if (ImGui::InputText("Tag", buf, sizeof(buf)))
+			if (ImGui::InputText("##Tag", buf, sizeof(buf)))
 			{
 				tag = std::string(buf);
 			}
@@ -223,17 +254,61 @@ namespace Ezzoo {
 
 		if (ImGui::BeginPopup("Add Component"))
 		{
-
-			if (ImGui::MenuItem("Camera"))
+			if (!m_SelectedEntity.HasComponent<CameraComponent>())
 			{
-				m_SelectedEntity.AddComponent<CameraComponent>();
-				ImGui::CloseCurrentPopup();
+				if (ImGui::MenuItem("Camera"))
+				{
+					m_SelectedEntity.AddComponent<CameraComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+			if (!m_SelectedEntity.HasComponent<SpriteRendererComponent>())
+			{
+				if (ImGui::MenuItem("Sprite Renderer"))
+				{
+
+					m_SelectedEntity.AddComponent<SpriteRendererComponent>();
+					ImGui::CloseCurrentPopup();
+				}
 			}
 
-			if (ImGui::MenuItem("Sprite Renderer"))
+			if (!m_SelectedEntity.HasComponent<RigidBodyComponent>())
 			{
-				m_SelectedEntity.AddComponent<SpriteRendererComponent>();
-				ImGui::CloseCurrentPopup();
+				if (ImGui::MenuItem("Rigid Body"))
+				{
+
+					m_SelectedEntity.AddComponent<RigidBodyComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+			if (!m_SelectedEntity.HasComponent<BoxColliderComponent>())
+			{
+				if (ImGui::MenuItem("Box Coillider"))
+				{
+
+					m_SelectedEntity.AddComponent<BoxColliderComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+
+			if (!m_SelectedEntity.HasComponent<CircleComponent>())
+			{
+				if (ImGui::MenuItem("Circle"))
+				{
+
+					m_SelectedEntity.AddComponent<CircleComponent>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+
+			if (!m_SelectedEntity.HasComponent<CircleColliderComponent>())
+			{
+				if (ImGui::MenuItem("Circle Coillider"))
+				{
+
+					m_SelectedEntity.AddComponent<CircleColliderComponent>();
+					ImGui::CloseCurrentPopup();
+				}
 			}
 
 			ImGui::EndPopup();
@@ -250,7 +325,7 @@ namespace Ezzoo {
 				DrawVec3Control("Rotation", rotation);
 				component.Rotation = glm::radians(rotation);
 
-				DrawVec3Control("Scale", component.Scale);
+				DrawVec3Control("Scale", component.Scale, 1.0f);
 					
 
 			});
@@ -258,16 +333,35 @@ namespace Ezzoo {
 		DrawComponent<SpriteRendererComponent>("Sprite", entity, [](auto& component) {
 				
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+
+			ImGui::Button("Text", ImVec2(100.0f, 0.0f));
+
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("Path"))
+				{
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					std::filesystem::path item = path;
+					component.Texture = Texture2D::CreateTexture2D(item.string());
+
+				}
+
+
+				ImGui::EndDragDropTarget();
+			}
+
+			ImGui::DragFloat("##Tiling", &component.TilingFactor);
 				
 			});
 
 		DrawComponent<CameraComponent>("Camera", entity, [](auto& component) {
 				
 			auto& camera = component.Camera;
+			ImGui::Checkbox("Primary", &component.PrimaryCamera);
+
 			const char* projectionTypePreview[] = { "Prespective", "Orthographic" };
 			const char* currentProjectionTypePreview = projectionTypePreview[(int)camera.GetProjectionType()];
 
-			ImGui::Checkbox("Primary", &component.PrimaryCamera);
 
 			if (ImGui::BeginCombo("Projection", currentProjectionTypePreview))
 			{
@@ -288,6 +382,24 @@ namespace Ezzoo {
 				ImGui::EndCombo();
 			}
 
+
+			// Prespective Camera
+			if (camera.GetProjectionType() == SceneCamera::ProjectionType::Prespective)
+			{
+				float prespectiveFov = glm::degrees(camera.GetPrespectiveFov());
+				if (ImGui::DragFloat("FOV", &prespectiveFov))
+					camera.SetPrespectiveFov(glm::radians(prespectiveFov));
+
+				float prespectiveNear = camera.GetPrespectiveNear();
+				if (ImGui::DragFloat("Near", &prespectiveNear))
+					camera.SetPrespectiveNear(prespectiveNear);
+
+				float prespectiveFar = camera.GetPrespectiveFar();
+				if (ImGui::DragFloat("Far", &prespectiveFar))
+					camera.SetPrespectiveFar(prespectiveFar);
+			}
+
+
 			// Orthographic Camera
 			if (camera.GetProjectionType() == SceneCamera::ProjectionType::Orthographic)
 			{
@@ -305,25 +417,70 @@ namespace Ezzoo {
 				ImGui::Checkbox("Fixed Aspect Ration", &component.FixedAspectRation);
 			}
 
-			// Prespective Camera
-			if (camera.GetProjectionType() == SceneCamera::ProjectionType::Prespective)
-			{
-				float prespectiveFov = glm::degrees(camera.GetPrespectiveFov());
-				if (ImGui::DragFloat("FOV", &prespectiveFov))
-					camera.SetPrespectiveFov(glm::radians(prespectiveFov));
-
-				float prespectiveNear = camera.GetOrthographicNear();
-				if (ImGui::DragFloat("Near", &prespectiveNear))
-					camera.SetPrespectiveNear(prespectiveNear);
-
-				float prespectiveFar = camera.GetPrespectiveFar();
-				if (ImGui::DragFloat("Far", &prespectiveFar))
-					camera.SetPrespectiveFar(prespectiveFar);
-			}
+		
 				
 			
 			});
 
+		DrawComponent<RigidBodyComponent>("RigidBody 2D", entity, [](auto& component) {
+
+
+			const char* bodyTypePreview[] = { "Static", "Dynamic", "Kinematic"};
+			const char* currentBodyTypePreview = bodyTypePreview[(int)component.Type];
+
+
+			if (ImGui::BeginCombo("Type", currentBodyTypePreview))
+			{
+				for (int i = 0; i < 3; i++)
+				{
+
+					bool isSelected = currentBodyTypePreview == bodyTypePreview[i];
+					if (ImGui::Selectable(bodyTypePreview[i], isSelected))
+					{
+						currentBodyTypePreview = bodyTypePreview[i];
+						component.Type = (RigidBodyComponent::BodyType)i;
+					}
+
+					if (isSelected)
+						ImGui::SetItemDefaultFocus();
+				}
+
+
+				ImGui::EndCombo();
+			}
+				ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
+		});
+
+
+		DrawComponent<BoxColliderComponent>("BoxCollider 2D", entity, [](auto& component) {
+
+			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset));
+			ImGui::DragFloat2("Size",  glm::value_ptr(component.Size));
+			ImGui::DragFloat("Denisty", &component.Denisty, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Ristitution", &component.Ristitution, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("RistitutionThreshold", &component.RistitutionThreshold, 0.01f, 0.0f);
+
+			});
+
+		DrawComponent<CircleComponent>("Circle", entity, [](auto& component) {
+
+			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+			ImGui::DragFloat("Thickness", &component.Thickness, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Fade", &component.Fade, 0.01f, 0.0f, 1.0f);
+
+			});
+
+		DrawComponent<CircleColliderComponent>("CircleCollider 2D", entity, [](auto& component) {
+
+			ImGui::DragFloat2("Offset", glm::value_ptr(component.Offset), 0.1f, -0.5f, 1.0f);
+			ImGui::DragFloat("Raduis", &component.Raduis);
+			ImGui::DragFloat("Denisty", &component.Denisty, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Friction", &component.Friction, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("Ristitution", &component.Ristitution, 0.01f, 0.0f, 1.0f);
+			ImGui::DragFloat("RistitutionThreshold", &component.RistitutionThreshold, 0.01f, 0.0f);
+
+			});
 	}
 
 }

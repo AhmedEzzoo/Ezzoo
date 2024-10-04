@@ -1,0 +1,96 @@
+Scene: Untitled
+Entities:
+  - Entity: 961272532499466726
+    TagComponent:
+      Tag: Floor
+    TransformComponent:
+      Translation: [-2.71205139, 1.34541857, 0]
+      Rotation: [0, 0, -0.487864554]
+      Scale: [9.69805527, 0.541666031, 1]
+    SpriteRendererComponent:
+      Color: [0.970588207, 0.295542419, 0.0142733697, 1]
+    RigidBody 2D:
+      Type: Static
+      FixedRotation: false
+    BoxCollider 2D:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Denisty: 1
+      Friction: 0.5
+      Ristitution: 0
+      RistitutionThreshold: 0.5
+  - Entity: 3569162642061441585
+    TagComponent:
+      Tag: Box_2
+    TransformComponent:
+      Translation: [-0.144000024, 1.91027153, 0]
+      Rotation: [0, 0, -0.698760331]
+      Scale: [0.568302631, 0.541380703, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+    RigidBody 2D:
+      Type: Dynamic
+      FixedRotation: false
+    BoxCollider 2D:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Denisty: 1
+      Friction: 0.850000024
+      Ristitution: 0.790000021
+      RistitutionThreshold: 0.5
+  - Entity: 2309348271925527153
+    TagComponent:
+      Tag: Floor
+    TransformComponent:
+      Translation: [2.90618396, -1.84616828, 0]
+      Rotation: [0, 0, 0.595805228]
+      Scale: [9.69805813, 0.541666567, 1]
+    SpriteRendererComponent:
+      Color: [0.970588207, 0.295542419, 0.0142733697, 1]
+    RigidBody 2D:
+      Type: Static
+      FixedRotation: false
+    BoxCollider 2D:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Denisty: 1
+      Friction: 0.5
+      Ristitution: 0
+      RistitutionThreshold: 0.5
+  - Entity: 5392493800405024398
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [0, 0, 7.19999981]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PrespectiveFOV: 0.785398185
+        PrespectiveNear: 0.00999999978
+        PrespectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 10402584433399714287
+    TagComponent:
+      Tag: BOx
+    TransformComponent:
+      Translation: [1.58400095, 1.91027153, 0]
+      Rotation: [0, 0, -0.698760331]
+      Scale: [0.568302631, 0.541380703, 1]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+    RigidBody 2D:
+      Type: Dynamic
+      FixedRotation: false
+    BoxCollider 2D:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Denisty: 1
+      Friction: 0.850000024
+      Ristitution: 0.790000021
+      RistitutionThreshold: 0.5

@@ -14,9 +14,10 @@ namespace Ezzoo {
 
 
 		void SetOrthogrphic(float size, float nearClip, float farClip);
+		void SetPrespective(float fov, float nearClip, float farClip);
 		void SetViewportSize(uint32_t  width, uint32_t height);
 
-		void SetProjectionTypeView(ProjectionType projection) { m_ProjectionType = projection; }
+		void SetProjectionTypeView(const ProjectionType& projection) { m_ProjectionType = projection; RecalculateMatrix(); }
 		ProjectionType GetProjectionTypeView() const { return m_ProjectionType; }
 
 
@@ -63,7 +64,7 @@ namespace Ezzoo {
 		}
 
 		ProjectionType GetProjectionType() const { return m_ProjectionType; }
-		void SetProjectionType(const ProjectionType& type)
+		void SetProjectionType(ProjectionType type)
 		{
 			m_ProjectionType = type;
 			RecalculateMatrix();

@@ -8,13 +8,21 @@ namespace Ezzoo {
 
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application() 
+
+	Application::Application(const ApplicationSpecification& specs)
+		: m_Specification(specs)
 		
 	{
-		if (s_Instance) return;
+
+		EZZOO_CORE_ASSERT(!s_Instance, "Application Already running");
+		//if (s_Instance) return;
 		s_Instance = this;
 
-		m_AppWindow = std::unique_ptr<Window>(Window::Create());
+		m_AppWindow = std::unique_ptr<Window>(Window::Create({ m_Specification.Name }));
+
+		if (!m_Specification.path.empty())
+			std::filesystem::current_path(m_Specification.path);
+
 		m_AppWindow->SetEventCallBack(EZZOO_BIND(Application::OnEvent));
 		
 		Renderer::Init();

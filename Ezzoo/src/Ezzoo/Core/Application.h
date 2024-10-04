@@ -9,14 +9,26 @@
 
 #include "Ezzoo/Renderer/Renderer.h"
 
+#include <filesystem>
+
 namespace Ezzoo {
+
+
+	struct ApplicationSpecification
+	{
+		std::string Name;
+		std::filesystem::path path;
+
+		ApplicationSpecification() = default;
+	};
+
 
 	class Application
 	{
 
 	public:
 
-		Application();
+		Application(const ApplicationSpecification& specs);
 		virtual ~Application();
 		void Run();
 
@@ -32,9 +44,12 @@ namespace Ezzoo {
 
 		Window& GetWindow();
 
+		ImGuiLayer* GetImGuiLayer() { return m_ImGuiLayer; }
+
 	private:
 		bool OnWindowCloseEvent(WindowCloseEvent& event);
 		bool Application::OnWindowResizedEvent(WindowResizedEvent& e);
+
 
 	private:
 		std::unique_ptr<Window> m_AppWindow;
@@ -44,12 +59,11 @@ namespace Ezzoo {
 		bool m_Minimized = false;
 
 		static Application* s_Instance;
-
 		float m_LastMeasuredTime = 0.0f;
-
+		ApplicationSpecification m_Specification;
 	};
 
-	Application* CreatApplication();
+	Application* CreatApplication(ApplicationSpecification& specs);
 
 }
 

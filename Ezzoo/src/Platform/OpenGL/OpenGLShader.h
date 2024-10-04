@@ -51,16 +51,24 @@ namespace Ezzoo {
 	
 		std::string ReadFile(const std::string& filepath);
 		std::unordered_map<GLenum, std::string> PreProcess(const std::string& result);
-		GLenum ShaderTypeFromString(const std::string& type);
-		void Compile(const std::unordered_map<GLenum, std::string>& shaders);
+		//GLenum ShaderTypeFromString(const std::string& type);
+		//void Compile(const std::unordered_map<GLenum, std::string>& shaders);
 
-		int GetLocation(const std::string& name);
-
+		//int GetLocation(const std::string& name);
+		void CompileOrGetVulkanBinaries(const std::unordered_map<GLenum, std::string>& shaderSources);
+		void CompileOrGetOpenGLBinaries();
+		void CreateProgram();
+		void Reflect(GLenum stage, const std::vector<uint32_t>& shaderData);
 
 	private :
 		uint32_t m_RendererID = 0;
+		std::string m_FilePath;
 		std::string m_Name;
-		std::unordered_map<std::string, int> m_CashedValues;
+
+		std::unordered_map<GLenum, std::vector<uint32_t>> m_VulkanSPIRV;
+		std::unordered_map<GLenum, std::vector<uint32_t>> m_OpenGLSPIRV;
+
+		std::unordered_map<GLenum, std::string> m_OpenGLSourceCode;
 
 
 	

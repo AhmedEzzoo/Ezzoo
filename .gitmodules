@@ -11,3 +11,9 @@
 	path = Ezzoo/vendor/imgui
 	url = https://github.com/ocornut/imgui.git
 
+[submodule "Ezzoo/vendor/yaml-cpp"]
+	path = Ezzoo/vendor/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp.git
+[submodule "Ezzoo/vendor/Box2D"]
+	path = Ezzoo/vendor/Box2D
+	url = https://github.com/TheCherno/box2d.git

@@ -11,7 +11,7 @@ namespace Ezzoo {
 		unsigned int Width;
 		unsigned Height;
 
-		WindowProps(const std::string& title = "Ezzoo", unsigned int width = 1248, unsigned int height = 750) 
+		WindowProps(const std::string& title = "Ezzoo", unsigned int width = 1600, unsigned int height = 900) 
 			: Title(title), Width(width), Height(height){}
 	};
 

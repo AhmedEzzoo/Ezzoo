@@ -4,8 +4,8 @@
 
 #include "Ezzoo/Core/Core.h"
 
-namespace Ezzoo {
 
+namespace Ezzoo {
 
 	class SceneSerialize
 	{
@@ -16,10 +16,11 @@ namespace Ezzoo {
 		bool SerializeRunTime(const std::string& filepath);
 
 
-		void Deserialize(const std::string& filepath);
+		bool Deserialize(const std::string& filepath);
 		bool DeserializeRunTime(const std::string& filepath);
 
-
+		static std::string OpenFile(const char* name);
+		static std::string SaveFile(const char* name);
 
 	private :
 

@@ -6,7 +6,7 @@ namespace Ezzoo {
 
 	enum class ShaderDataType
 	{
-		None = 0, Float, Float2, Float3, Float4, Mat2, Mat3, Mat4, Int, Int2, Int3, Bool
+		None = 0, Float, Float2, Float3, Float4, Mat2, Mat3, Mat4, Int, Int2, Int3, Int4, Bool
 	};
 
 	static uint32_t GetDataTypeSize(ShaderDataType type)
@@ -23,6 +23,7 @@ namespace Ezzoo {
 		case ShaderDataType::Int:			return 4;
 		case ShaderDataType::Int2:			return 4 * 2;
 		case ShaderDataType::Int3:			return 4 * 3;
+		case ShaderDataType::Int4:			return 4 * 4;
 		case ShaderDataType::Bool:			return 1;
 
 		}
@@ -40,9 +41,9 @@ namespace Ezzoo {
 		uint32_t Offset;
 		bool Normalized;
 
-		BufferElement() {}
+		BufferElement() = default;
 		BufferElement(ShaderDataType type, const std::string& name, bool normalize = false) :
-			Type(type), Name(name), Size(GetDataTypeSize(type)), Offset(0), Normalized(normalize)
+			Type(type), Name(name),  Normalized(normalize), Size(GetDataTypeSize(type)), Offset(0)
 		{
 		}
 
@@ -60,6 +61,7 @@ namespace Ezzoo {
 			case ShaderDataType::Int:			return 1;
 			case ShaderDataType::Int2:			return 2;
 			case ShaderDataType::Int3:			return 3;
+			case ShaderDataType::Int4:			return 4;
 			case ShaderDataType::Bool:			return 1;
 
 			}
@@ -75,7 +77,7 @@ namespace Ezzoo {
 	{
 	public:
 
-		BufferLayout() {}
+		BufferLayout() = default;
 		BufferLayout(const std::initializer_list<BufferElement>& elements) : m_Elements(elements)
 		{
 			CalculateOffset();
@@ -106,7 +108,7 @@ namespace Ezzoo {
 
 	private:
 		std::vector<BufferElement> m_Elements;
-		uint32_t m_StrID;
+		uint32_t m_StrID = 0;
 	};
 
 
@@ -119,6 +121,7 @@ namespace Ezzoo {
 		virtual void Unbind() const = 0;
 
 		virtual void SetData(const void* data, uint32_t dataSize) = 0;
+		virtual void ClearData(const void* data) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 

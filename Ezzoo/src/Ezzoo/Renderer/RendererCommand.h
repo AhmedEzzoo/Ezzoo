@@ -29,10 +29,20 @@ namespace Ezzoo {
 			s_RendererAPI->ClearColor();
 		}
 
-		static inline void DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount = 0)
+		static inline void DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount = 0)
 		{
 			s_RendererAPI->DrawIndexed(vertexArray, indexCount);
 		}
+
+		static inline void DrawLine(const Ref<VertexArray>& vertexArray, uint32_t count = 0)
+		{
+			s_RendererAPI->DrawLine(vertexArray, count);
+		}
+		static inline void SetWidth(float width)
+		{
+			s_RendererAPI->SetWidth(width);
+		}
+
 	private :
 		static RendererAPI* s_RendererAPI;
 	};

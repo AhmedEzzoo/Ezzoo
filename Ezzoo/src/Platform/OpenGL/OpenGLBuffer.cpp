@@ -39,6 +39,13 @@ namespace Ezzoo {
 		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
 		glBufferSubData(GL_ARRAY_BUFFER, 0, dataSize, data);
 	}
+
+	void OpenGLVertexBuffer::ClearData(const void* data)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glClearBufferData(GL_ARRAY_BUFFER, GL_RGBA8, GL_RGBA, GL_FLOAT, data);
+	}
+
 	const BufferLayout& OpenGLVertexBuffer::GetLayout() const  
 	{
 		return m_Layout;
@@ -53,9 +60,9 @@ namespace Ezzoo {
 	///////////////////INDEX BUFFER//////////////////////////
 	OpenGLIndexBuffer::OpenGLIndexBuffer(uint32_t* indecies, uint32_t count) : m_Count(count)
 	{
-		glGenBuffers(1, &m_RendererID);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_RendererID);
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, count * sizeof(indecies), indecies, GL_STATIC_DRAW);
+		glCreateBuffers(1, &m_RendererID);
+		glBindBuffer(GL_ARRAY_BUFFER, m_RendererID);
+		glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indecies, GL_STATIC_DRAW);
 	}
 
 	OpenGLIndexBuffer::~OpenGLIndexBuffer()

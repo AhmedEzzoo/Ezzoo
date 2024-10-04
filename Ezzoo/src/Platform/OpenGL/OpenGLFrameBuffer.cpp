@@ -132,11 +132,11 @@ namespace Ezzoo {
 			glDeleteTextures(m_ColorAttachments.size(), m_ColorAttachments.data());
 			glDeleteTextures(1, &m_DepthAttachment);
 
-			m_DepthAttachment = 0;
 			m_ColorAttachments.clear();
+			m_DepthAttachment = 0;
 		}
 
-		glCreateFramebuffers(1, &m_RendererID);
+		glGenFramebuffers(1, &m_RendererID);
 		glBindFramebuffer(GL_FRAMEBUFFER, m_RendererID);
 
 		bool multiSample = m_Specifications.Samples > 1;
@@ -214,7 +214,7 @@ namespace Ezzoo {
 
 		Invalidate();
 
-	}
+ 	}
 	int OpenGLFrameBuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 	{
 		EZZOO_CORE_ASSERT(attachmentIndex < m_ColorAttachments.size(), "Color attached size is Wrong");

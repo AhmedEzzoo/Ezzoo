@@ -29,9 +29,24 @@ namespace Ezzoo {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
-	void OpenGLRenderer::DrawIndexed(const std::shared_ptr<VertexArray>& vertexArray, uint32_t indexCount)
+	void OpenGLRenderer::DrawIndexed(const Ref<VertexArray>& vertexArray, uint32_t indexCount)
 	{
+		vertexArray->Bind();
 		uint32_t count = indexCount ? vertexArray->GetIndexBuffer()->GetCount() : indexCount;
 		glDrawElements(GL_TRIANGLES, count, GL_UNSIGNED_INT, nullptr);
+		//glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void OpenGLRenderer::DrawLine(const Ref<VertexArray>& vertexArray, uint32_t count)
+	{
+		vertexArray->Bind();
+		glDrawArrays(GL_LINES, 0, count);
+		//glBindTexture(GL_TEXTURE_2D, 0);
+	}
+
+	void OpenGLRenderer::SetWidth(float width)
+	{
+		glLineWidth(width);
+		//glBindTexture(GL_TEXTURE_2D, 0);
 	}
 }

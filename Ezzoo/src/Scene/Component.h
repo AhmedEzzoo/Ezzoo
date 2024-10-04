@@ -7,6 +7,8 @@
 #include "SceneCamera.h"
 #include "ScriptableEntity.h"
 #include "Ezzoo/Core/TimeStep.h"
+#include "Ezzoo/Renderer/Texture.h"
+#include "Ezzoo/Core/UUID.h"
 
 #define GLM_ENABLE_EXPERIMENTAL
 #include "glm/gtx/quaternion.hpp"
@@ -15,6 +17,20 @@
 namespace Ezzoo {
 
 
+	struct IDComponent
+	{
+		UUID ID; 
+
+
+		IDComponent() = default;
+		IDComponent(const IDComponent& other) = default;
+		IDComponent(const UUID& id)
+			: ID(id)
+		{
+
+		}
+		
+	};
 
 	struct TagComponent
 	{
@@ -31,9 +47,9 @@ namespace Ezzoo {
 
 	struct TransformComponent
 	{
-		glm::vec3 Translation = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 Rotation = { 0.0f, 0.0f, 0.0f };
-		glm::vec3 Scale = { 1.0f, 1.0f, 1.0f };
+		glm::vec3 Translation { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Rotation { 0.0f, 0.0f, 0.0f };
+		glm::vec3 Scale { 1.0f, 1.0f, 1.0f };
 
 		//glm::mat4 Transform = glm::translate(glm::mat4(1.0f), Translation) * ;
 
@@ -42,14 +58,30 @@ namespace Ezzoo {
 		TransformComponent(const TransformComponent& other) = default;
 		//TransformComponent(const glm::mat4& trans) : Transform(trans)
 		//{}
-
+		TransformComponent(const glm::vec3& translation) : Translation(translation)
+		{
+		}
 		glm::mat4 GetTransform() const
 		{
 			glm::mat4 rotation = glm::toMat4(glm::quat(Rotation));
 
-			return glm::translate(glm::mat4(1.0f), Translation) * rotation * glm::scale(glm::mat4(1.0f), Scale);
+			return glm::translate(glm::mat4(1.0f), Translation) * 
+				rotation * 
+				glm::scale(glm::mat4(1.0f), Scale);
 		}
 
+	};
+
+	struct CircleComponent
+	{
+		glm::vec4 Color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		float Thickness = 1.0f;
+		float Fade = 0.005f;
+		
+
+		CircleComponent() = default;
+		CircleComponent(const CircleComponent& other) = default;
 	};
 
 	struct CameraComponent
@@ -68,7 +100,10 @@ namespace Ezzoo {
 
 	struct SpriteRendererComponent
 	{
-		glm::vec4 Color{ 1.0f, 1.0f, 1.0f, 1.0f};
+		glm::vec4 Color { 1.0f, 1.0f, 1.0f, 1.0f};
+		Ref<Texture2D> Texture;
+		float TilingFactor = 1.0f;
+
 
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent& other) = default;
@@ -77,6 +112,49 @@ namespace Ezzoo {
 
 	};
 
+	struct RigidBodyComponent
+	{
+		enum class BodyType { Static = 0, Dynamic, Kinematic };
+		BodyType Type = BodyType::Static;
+		void* RunTimeBody = nullptr;
+
+		bool FixedRotation = false;
+
+		RigidBodyComponent() = default;
+		RigidBodyComponent(const RigidBodyComponent&) = default;
+
+	};
+
+	struct BoxColliderComponent
+	{
+		glm::vec2 Offset = { 0.0f, 0.0f };
+		glm::vec2 Size = { 0.5f, 0.5f };
+
+		float Denisty = 1.0f;
+		float Friction = 0.5f;
+		float Ristitution = 0.0f;
+		float RistitutionThreshold = 0.5f;
+
+
+		BoxColliderComponent() = default;
+		BoxColliderComponent(const BoxColliderComponent&) = default;
+	};
+
+
+	struct CircleColliderComponent
+	{
+		glm::vec2 Offset = { 0.0f, 0.0f };
+		float Raduis = 0.5f;
+
+		float Denisty = 1.0f;
+		float Friction = 0.5f;
+		float Ristitution = 0.0f;
+		float RistitutionThreshold = 0.5f;
+
+
+		CircleColliderComponent() = default;
+		CircleColliderComponent(const CircleColliderComponent&) = default;
+	};
 
 	struct NativeScriptComponent
 	{
@@ -102,7 +180,13 @@ namespace Ezzoo {
 
 		}
 
+	};
 
+	template <typename... Components>
+	struct ComponentsGroup
+	{
 
 	};
+
+	using AllComponents = ComponentsGroup<TransformComponent, SpriteRendererComponent, CameraComponent, CircleComponent, BoxColliderComponent, RigidBodyComponent, CircleColliderComponent>;
 }
