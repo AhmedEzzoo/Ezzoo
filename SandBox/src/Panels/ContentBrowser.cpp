@@ -57,7 +57,7 @@ namespace Ezzoo {
 			
 			 Ref<Texture2D> icon = entry.is_directory() ? m_FolderTexture : m_FileTexture;
 			 ImGui::PushStyleColor(ImGuiCol_Button, { 0.0f, 0.0f, 0.0f, 1.0f });
-			 ImGui::ImageButton("DragDrop", (void*)icon->GetRendererID(), ImVec2(iconSize, iconSize), ImVec2{0, 1}, ImVec2{1, 0});
+			 ImGui::ImageButton((void*)icon->GetRendererID(), ImVec2(iconSize, iconSize), ImVec2{0, 1}, ImVec2{1, 0});
 
 
 			if (ImGui::BeginDragDropSource())
