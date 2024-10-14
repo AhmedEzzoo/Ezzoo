@@ -259,6 +259,8 @@ namespace Ezzoo {
 			out << YAML::Key << "Color" << YAML::Value << component.Color;
 			if (component.Texture)
 				out << YAML::Key << "Texture" << YAML::Value << component.Texture->GetPath();
+			else 
+				out << YAML::Key << "Texture" << YAML::Value << "";
 			out << YAML::Key << "TillingFactor" << YAML::Value << component.TilingFactor;
 			out << YAML::EndMap;
 		}

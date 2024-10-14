@@ -1,14 +1,16 @@
 Scene: Untitled
 Entities:
-  - Entity: 7620108162841981416
+  - Entity: 7620108162841981411
     TagComponent:
       Tag: Right
     TransformComponent:
-      Translation: [2.17908072, 2.26590782e-06, 0.2490426]
+      Translation: [2.17908072, 2.2649765e-06, 0.2490426]
       Rotation: [0, 0.785398245, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [0.54842025, 0, 0.586872578, 1]
+      Texture: ""
+      TillingFactor: 1
     RigidBody 2D:
       Type: Static
       FixedRotation: false
@@ -19,15 +21,17 @@ Entities:
       Friction: 0.5
       Ristitution: 0
       RistitutionThreshold: 0.5
-  - Entity: 7620108162841981416
+  - Entity: 7620108162841981412
     TagComponent:
       Tag: Left
     TransformComponent:
-      Translation: [-2.14982867, 0.324596286, 0.398844332]
+      Translation: [-2.8499999, 0.324596286, 0.403440803]
       Rotation: [0, -0.785398245, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 0, 0.949807167, 1]
+      Texture: assets\Pictures\pic_2.png
+      TillingFactor: 1
     RigidBody 2D:
       Type: Static
       FixedRotation: false
@@ -38,15 +42,17 @@ Entities:
       Friction: 0.5
       Ristitution: 0
       RistitutionThreshold: 0.5
-  - Entity: 7620108162841981416
+  - Entity: 7620108162841981413
     TagComponent:
-      Tag: Top
+      Tag: Cube Top
     TransformComponent:
-      Translation: [0, 0.5, 0]
-      Rotation: [1.57079637, 0.785398185, 0]
-      Scale: [1, 1, 1]
+      Translation: [-1.81607884e-08, 0.5, 1.1641534e-08]
+      Rotation: [1.57079613, 0.785398245, -4.21468513e-08]
+      Scale: [0.999999881, 0.999999285, 0.999997914]
     SpriteRendererComponent:
       Color: [0.876447856, 0, 0.834712803, 1]
+      Texture: ""
+      TillingFactor: 1
     RigidBody 2D:
       Type: Static
       FixedRotation: false
@@ -57,7 +63,7 @@ Entities:
       Friction: 0.5
       Ristitution: 0
       RistitutionThreshold: 0.5
-  - Entity: 7620108162841981416
+  - Entity: 7620108162841981414
     TagComponent:
       Tag: Camera
     TransformComponent:
@@ -75,15 +81,17 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 7620108162841981416
+  - Entity: 7620108162841981415
     TagComponent:
-      Tag: Right
+      Tag: Cube Right
     TransformComponent:
-      Translation: [0.351999998, 0, 0.349999994]
-      Rotation: [0, 0.785398185, 0]
+      Translation: [0.351999998, 3.7252903e-09, 0.349999994]
+      Rotation: [0, 0.785398245, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [0.54842025, 0, 0.586872578, 1]
+      Texture: ""
+      TillingFactor: 1
     RigidBody 2D:
       Type: Static
       FixedRotation: false
@@ -96,13 +104,15 @@ Entities:
       RistitutionThreshold: 0.5
   - Entity: 7620108162841981416
     TagComponent:
-      Tag: Left
+      Tag: Cube Left
     TransformComponent:
       Translation: [-0.354999989, 0, 0.349999994]
-      Rotation: [0, -0.785398185, 0]
+      Rotation: [0, -0.785398245, 0]
       Scale: [1, 1, 1]
     SpriteRendererComponent:
       Color: [1, 0, 0.949807167, 1]
+      Texture: ""
+      TillingFactor: 1
     RigidBody 2D:
       Type: Static
       FixedRotation: false

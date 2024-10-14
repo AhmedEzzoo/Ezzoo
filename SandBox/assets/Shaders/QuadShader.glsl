@@ -5,32 +5,41 @@ layout(location = 0) in vec3 a_Position;
 layout(location = 1) in vec4 a_Color;
 layout(location = 2) in vec2 a_TextCoord;
 layout(location = 3) in float a_TextSlot;
-layout(location = 4) in float a_TilingFactor;
-layout(location = 5) in int a_EntityID;
+layout(location = 4) in vec3 a_Norm;
+layout(location = 5) in float a_TilingFactor;
+layout(location = 6) in int a_EntityID;
 
 layout(std140, binding = 0) uniform Camera
 {
 	mat4 u_ViewProjection;
+	mat4 u_Modal;
 };
 
 struct VertexOutput
 {
 	vec4 Color;
 	vec2 TextCoord;
+	vec3 Norml;
 	float TilingFactor;
+	vec3 FragPos;
+	
 };
 
+
 layout (location = 0) out VertexOutput Output;
-layout (location = 3) out flat float v_TextSlot;
-layout (location = 4) out flat int v_EntityID;
+layout (location = 5) out flat float v_TextSlot;
+layout (location = 6) out flat int v_EntityID;
 
 void main()
 {
 	Output.Color = a_Color;
 	Output.TextCoord = a_TextCoord;
 	Output.TilingFactor = a_TilingFactor;
+	Output.Norml =  mat3(transpose(inverse(u_Modal))) * a_Norm;
+	Output.FragPos = (u_Modal * vec4(a_Position, 1.0)).xyz;
 	v_TextSlot = a_TextSlot;
 	v_EntityID = a_EntityID;
+
 
 	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 }
@@ -46,20 +55,58 @@ struct VertexOutput
 {
 	vec4 Color;
 	vec2 TextCoord;
+	vec3 Norml;
 	float TilingFactor;
+	vec3 FragPos;
 };
 
+
+
 layout (location= 0) in VertexOutput Input;
-layout (location= 3) in flat float v_TextSlot;
-layout (location= 4) in flat int v_EntityID;
+layout (location= 5) in flat float v_TextSlot;
+layout (location= 6) in flat int v_EntityID;
 
 
 layout (binding = 0) uniform sampler2D u_Texture[32];
+layout (std140, binding = 1) uniform DirectionalLight
+{
+
+	vec3 Color;
+	float AmbientIntensity;
+	vec3 DiffiusDirection;
+	float DiffiusIntensity;
+	vec3 EyePosition;
+	float specularIntensity;
+	float shininess;
+
+};
+
 
 
 void main()
 {
-	vec4 texColor = Input.Color;
+	vec4 ambientColor = vec4(Color, 1.0f) * AmbientIntensity;
+
+	float diffiusFactor = max(dot(normalize(Input.Norml), normalize(DiffiusDirection)), 0.0f);
+	vec4 diffiusColor = vec4(Color, 1.0f) * DiffiusIntensity * diffiusFactor;
+
+	vec4 specularColor  = vec4(0, 0, 0, 0);
+	if (diffiusFactor > 0.0)
+	{
+		vec3 fragToEye  = normalize(EyePosition - Input.FragPos);
+		vec3 reflectedVertex = normalize(reflect(DiffiusDirection, normalize(Input.Norml)));
+
+		float specularFactor = dot(fragToEye, reflectedVertex);
+		if (specularFactor > 0.0)
+		{
+			specularFactor = pow(specularFactor, shininess);
+			specularColor = vec4(Color * specularIntensity * specularFactor, 1.0f);
+		}
+	}
+
+	vec4 texColor = Input.Color * (ambientColor +  diffiusColor + specularColor);
+
+
 	
 	switch(int(v_TextSlot))
 	{

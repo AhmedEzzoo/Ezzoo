@@ -19,6 +19,7 @@ namespace Ezzoo {
 		glm::vec4 Color;
 		glm::vec2 TextCoords;
 		float TextSlot = 0.0f;
+		glm::vec3 Norm;
 		float TilingFactor = 1.0f;
 		int EntityID;
 	};	
@@ -98,11 +99,27 @@ namespace Ezzoo {
 		struct CameraData
 		{
 			glm::mat4 ViewProjection;
+			glm::mat4 Modal;
 		};
 
 		CameraData CameraBuffer;
 		Ref<UniformBuffer> CameraUniformBuffer;
-		
+
+
+		struct DirectionalLight
+		{
+			
+			glm::vec3 Color;
+			float AmbientIntensity;
+			glm::vec3 DiffiusDirection;
+			float DiffiusIntensity;
+			glm::vec3 EyePosition;
+			float SpecularIntensity;
+			float Shininess;
+
+		};
+		DirectionalLight LightBuffer;
+		Ref<UniformBuffer> LightUniformBuffer;
 		
 	};
 
@@ -124,6 +141,7 @@ namespace Ezzoo {
 				{ ShaderDataType::Float4, "a_Color"}, 
 				{ ShaderDataType::Float2, "a_TextCoord"},
 				{ ShaderDataType::Float , "a_TextSlot"},
+				{ ShaderDataType::Float3 , "a_Norm"},
 				{ ShaderDataType::Float , "a_TilingFactor"},
 				{ ShaderDataType::Int, "a_EntityID" }
 
@@ -207,6 +225,7 @@ namespace Ezzoo {
 		s_Data.QuadPosition[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
 
 		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer2DData::CameraData), 0);
+		s_Data.LightUniformBuffer = UniformBuffer::Create(sizeof(Renderer2DData::DirectionalLight), 1);
 
 		
 		
@@ -245,18 +264,29 @@ namespace Ezzoo {
 	}
 	void Renderer2D::BeginScene(const EditorCamera& camera)
 	{
-		/*glm::mat4 viewProj = camera.GetViewProjection();
-		s_Data.QuadShader->SetMat4("u_ViewProjection", viewProj);*/
+		
 		s_Data.CameraBuffer.ViewProjection = camera.GetViewProjection();
+		s_Data.CameraBuffer.Modal = camera.GetModal();
 		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DData::CameraData));
+
+		
+		s_Data.LightBuffer.Color = glm::vec3(1.0f, 1.0f, 1.0f);
+		s_Data.LightBuffer.AmbientIntensity = 0.7f;
+
+		s_Data.LightBuffer.DiffiusDirection = glm::vec3(0.0f, 0.0f, -1.0f);
+		s_Data.LightBuffer.DiffiusIntensity = 0.3f;
+
+		s_Data.LightBuffer.EyePosition = glm::vec3(camera.GetPosition().x, camera.GetPosition().y, camera.GetPosition().z);
+		s_Data.LightBuffer.SpecularIntensity = 1.0f;
+		s_Data.LightBuffer.Shininess = 32.0f;
+		s_Data.LightUniformBuffer->SetData(&s_Data.LightBuffer, sizeof(Renderer2DData::LightBuffer));
 
 		StartBatch();
 	}
 
 	void Renderer2D::EndScene()
 	{
-		/*uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.QuadVertexPtr - (uint8_t *)s_Data.QuadVertexBase);
-		s_Data.RendererVB->SetData(s_Data.QuadVertexBase, dataSize);*/
+
 		{
 			if (s_Data.QuadVertexCurrentPtr != nullptr)
 			{
@@ -317,6 +347,7 @@ namespace Ezzoo {
 
 				s_Data.QuadShader->Bind();
 				RendererCommand::DrawIndexed(s_Data.RendererVA, s_Data.QuadIndciesCount);
+
 				s_Data.stats.DrawCalls++;
 			}
 		
@@ -353,18 +384,21 @@ namespace Ezzoo {
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
 		const float texIndex = 0.0f;
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 
 		s_Data.QuadVertexPtr->Position = position;
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[0] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
-		
+
 		s_Data.QuadVertexPtr->Position = { position.x + size.x, position.y, position.z };
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[1] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
 
@@ -372,6 +406,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[2] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
 
@@ -379,6 +414,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[3] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
 
@@ -425,12 +461,14 @@ namespace Ezzoo {
 			s_Data.TextureIndex++;
 		}
 
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
 
 
 		s_Data.QuadVertexPtr->Position = position;
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[0] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
 
@@ -438,6 +476,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[1] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
 
@@ -445,6 +484,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[2] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
 
@@ -452,6 +492,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[3] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = 1.0f;
 		s_Data.QuadVertexPtr++;
 
@@ -479,6 +520,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[0] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr->EntityID = entityID;
 		s_Data.QuadVertexPtr++;
@@ -487,6 +529,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[1] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr->EntityID = entityID;
 		s_Data.QuadVertexPtr++;
@@ -495,6 +538,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[2] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr->EntityID = entityID;
 		s_Data.QuadVertexPtr++;
@@ -503,6 +547,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[3] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr->EntityID = entityID;
 		s_Data.QuadVertexPtr++;
@@ -530,6 +575,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[0] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -537,6 +583,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[1] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -544,6 +591,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[2] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -551,6 +599,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = texIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[3] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -610,6 +659,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[0] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -617,6 +667,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 0.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[1] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -624,6 +675,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 1.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[2] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -631,6 +683,7 @@ namespace Ezzoo {
 		s_Data.QuadVertexPtr->Color = color;
 		s_Data.QuadVertexPtr->TextCoords = { 0.0f, 1.0f };
 		s_Data.QuadVertexPtr->TextSlot = textIndex;
+		s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[3] - 1.0f);
 		s_Data.QuadVertexPtr->TilingFactor = tiligFactor;
 		s_Data.QuadVertexPtr++;
 
@@ -695,13 +748,13 @@ namespace Ezzoo {
 
 
 
-
 		for (size_t i = 0; i < quadVertexCount; i++)
 		{
 			s_Data.QuadVertexPtr->Position = transform * s_Data.QuadPosition[i];
 			s_Data.QuadVertexPtr->Color = color;
 			s_Data.QuadVertexPtr->TextCoords = textCoord[i];
 			s_Data.QuadVertexPtr->TextSlot = textIndex;
+			s_Data.QuadVertexPtr->Norm = glm::normalize(transform * s_Data.QuadPosition[i] - 1.0f);
 			s_Data.QuadVertexPtr->TilingFactor = tilingFactor;
 			s_Data.QuadVertexPtr->EntityID = entityID;
 			s_Data.QuadVertexPtr++;
