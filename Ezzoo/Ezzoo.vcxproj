@@ -152,6 +152,7 @@
     <ClInclude Include="src\Ezzoo\Core\MouseCodes.h" />
     <ClInclude Include="src\Ezzoo\Core\TimeStep.h" />
     <ClInclude Include="src\Ezzoo\Core\Timer.h" />
+    <ClInclude Include="src\Ezzoo\Core\UUID.h" />
     <ClInclude Include="src\Ezzoo\Core\Window.h" />
     <ClInclude Include="src\Ezzoo\Events\Event.h" />
     <ClInclude Include="src\Ezzoo\Events\KeyEvent.h" />
@@ -190,7 +191,6 @@
     <ClInclude Include="src\Scene\SceneSerialize.h" />
     <ClInclude Include="src\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\ezpch.h" />
-    <ClInclude Include="src\Ezzoo\Core\UUID.h" />
     <ClInclude Include="vendor\ImGuizmo\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -615,6 +615,7 @@
     <ClCompile Include="src\Ezzoo\Core\Layer.cpp" />
     <ClCompile Include="src\Ezzoo\Core\LayerStack.cpp" />
     <ClCompile Include="src\Ezzoo\Core\Log.cpp" />
+    <ClCompile Include="src\Ezzoo\Core\UUID.cpp" />
     <ClCompile Include="src\Ezzoo\IamGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Ezzoo\Math\Math.cpp" />
     <ClCompile Include="src\Ezzoo\Renderer\Buffers.cpp" />
@@ -648,7 +649,6 @@
     <ClCompile Include="src\ezpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Ezzoo\Core\UUID.cpp" />
     <ClCompile Include="vendor\ImGuizmo\ImGuizmo\ImGuizmo.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

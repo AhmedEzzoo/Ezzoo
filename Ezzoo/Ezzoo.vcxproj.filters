@@ -105,6 +105,9 @@
     <ClInclude Include="src\Ezzoo\Core\Timer.h">
       <Filter>src\Ezzoo\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Ezzoo\Core\UUID.h">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Ezzoo\Core\Window.h">
       <Filter>src\Ezzoo\Core</Filter>
     </ClInclude>
@@ -1473,7 +1476,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Ezzoo\Core\UUID.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Ezzoo\Core\Application.cpp">
@@ -1486,6 +1488,9 @@
       <Filter>src\Ezzoo\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\Core\Log.cpp">
+      <Filter>src\Ezzoo\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ezzoo\Core\UUID.cpp">
       <Filter>src\Ezzoo\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Ezzoo\IamGui\ImGuiLayer.cpp">
@@ -1587,6 +1592,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Ezzoo\Core\UUID.cpp" />
   </ItemGroup>
 </Project>

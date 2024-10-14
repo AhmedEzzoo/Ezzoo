@@ -491,7 +491,7 @@ namespace Ezzoo {
 		Ref<Texture2D> btnTexPlayAndEdit = (m_SceneStatus == SceneStatus::Edit || m_SceneStatus == SceneStatus::Simulate) ? m_PlayButtonTexture : m_StopButtonTexture;
 		 
 		uint32_t texIDPlayAndEdit = btnTexPlayAndEdit->GetRendererID();
-		if (ImGui::ImageButton((void*)texIDPlayAndEdit, ImVec2{ 20.0f, 20.0f }))
+		if (ImGui::ImageButton("PlayBtn",(void*)texIDPlayAndEdit, ImVec2{20.0f, 20.0f}))
 		{
 			if (m_SceneStatus == SceneStatus::Edit || m_SceneStatus == SceneStatus::Simulate)
 			{
@@ -508,7 +508,7 @@ namespace Ezzoo {
 		Ref<Texture2D> btnTexSimulateAndEdit = m_SceneStatus == SceneStatus::Edit || m_SceneStatus == SceneStatus::Play ? m_SimulateButtonTexture : m_StopButtonTexture;
 
 		uint32_t texIDSimulateAndEdit = btnTexSimulateAndEdit->GetRendererID();
-		if (ImGui::ImageButton((void*)texIDSimulateAndEdit, ImVec2{ 20.0f, 20.0f }))
+		if (ImGui::ImageButton("SimulateBtn",(void*)texIDSimulateAndEdit, ImVec2{20.0f, 20.0f}))
 		{
 			if (m_SceneStatus == SceneStatus::Edit || m_SceneStatus == SceneStatus::Play  )
 			{
