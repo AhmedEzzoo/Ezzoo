@@ -46,6 +46,8 @@ namespace Ezzoo {
 		static void DrawQuad(const glm::mat4& transform, const SpriteRendererComponent& color, int entityID);
 		static void DrawQuad(const glm::mat4& transform, Ref<Texture2D> texture, const glm::vec4& color, float TilingFactor, int entityID);
 
+
+
 		static void DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness = 1.0f, float fade = 0.005f, int entityID = -1);
 		static void DrawLine(const glm::vec3& p0, const glm::vec3& p1, const glm::vec4& color, int entityID = -1);
 
@@ -53,6 +55,7 @@ namespace Ezzoo {
 		static void DrawRect(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, int entityID = -1);
 		static void DrawRect(const glm::mat4& transform, const glm::vec4& color, int entityID = -1);
 
+		static void DrawCube(const glm::vec3& position, const glm::vec4& color, int entityID = -1);
 
 		static void SetLineWidth(float lineWidth);
 		static float GetLineWidth();

@@ -21,7 +21,15 @@ namespace Ezzoo {
 		float TextSlot = 0.0f;
 		float TilingFactor = 1.0f;
 		int EntityID;
-	};	
+	};
+
+	struct CubeVertex
+	{
+		glm::vec3 Position;
+		glm::vec4 Color;
+
+		int EntityID;
+	};
 	
 	struct CircleVertex
 	{
@@ -61,6 +69,16 @@ namespace Ezzoo {
 		QuadVertex* QuadVertexBase = nullptr;
 		QuadVertex* QuadVertexPtr = nullptr;
 
+		//Cube
+		Ref<VertexArray> CubeLightingVA;
+		Ref<VertexBuffer> CubeLightingVB;
+		Ref<Shader> CubeLightingShader;
+		uint32_t CubeLightingIndciesCount = 0;
+		CubeVertex* CubeLightingVertexCurrentPtr = nullptr;
+
+		CubeVertex* CubeLightingVertexBase = nullptr;
+		CubeVertex* CubeLightingVertexPtr = nullptr;
+
 		//Circle
 		Ref<VertexArray> CircleVA;
 		Ref<VertexBuffer> CircleVB;
@@ -94,16 +112,24 @@ namespace Ezzoo {
 		Renderer2D::RendererStats stats;
 
 		glm::vec4 QuadPosition[4];
+		glm::vec4 CubeLightingPosition[8];
 
 		struct CameraData
 		{
 			glm::mat4 ViewProjection;
-			glm::mat4 Modal;
+			glm::mat4 Model = glm::mat4(1.0f);
 		};
 
 		CameraData CameraBuffer;
 		Ref<UniformBuffer> CameraUniformBuffer;
+
+		struct LightData
+		{
+			glm::vec4 LightColor = glm::vec4(1.0f);
+		};
 		
+		LightData LightBuffer;
+		Ref<UniformBuffer> LightUniformBuffer;
 	};
 
 
@@ -154,6 +180,47 @@ namespace Ezzoo {
 
 
 
+		//Cube Lighting
+		s_Data.CubeLightingVA = VertexArray::Create();
+		s_Data.CubeLightingVA->Bind();
+		s_Data.CubeLightingVB = VertexBuffer::Create(s_Data.MaxVertices * sizeof(CubeVertex));
+		s_Data.CubeLightingVB->SetLayout({
+				{ ShaderDataType::Float3, "a_Position"},
+				{ ShaderDataType::Float4, "a_Color"},
+				{ ShaderDataType::Int, "a_EntityID" }
+
+			});
+
+		s_Data.CubeLightingVA->AddVertexBuffer(s_Data.CubeLightingVB);
+		s_Data.CubeLightingVertexBase = new CubeVertex[s_Data.MaxVertices];
+
+
+		uint32_t lightIndices[] =
+		{
+			0, 1, 2,
+			0, 2, 3,
+			0, 4, 7,
+			0, 7, 3,
+			3, 7, 6,
+			3, 6, 2,
+			2, 6, 5,
+			2, 5, 1,
+			1, 5, 4,
+			1, 4, 0,
+			4, 5, 6,
+			4, 6, 7
+		};
+
+		Ref<IndexBuffer> indexLightBuffer = IndexBuffer::Create(lightIndices, sizeof(lightIndices));
+		s_Data.CubeLightingVA->SetIndexBuffer(indexLightBuffer);
+
+
+
+
+
+
+
+
 		//Circle
 		s_Data.CircleVA = VertexArray::Create();
 		s_Data.CircleVB = VertexBuffer::Create(s_Data.MaxVertices * sizeof(CircleVertex));
@@ -195,18 +262,32 @@ namespace Ezzoo {
 
 
 		s_Data.QuadShader = Shader::Create("assets/Shaders/QuadShader.glsl");
+		s_Data.CubeLightingShader = Shader::Create("assets/Shaders/CubeShader.glsl");
 		s_Data.CircleShader = Shader::Create("assets/Shaders/CircleShader.glsl");
 		s_Data.LineShader = Shader::Create("assets/Shaders/LineShader.glsl");
 
 		s_Data.Textures[0] = s_Data.WhiteTexture;
-
+		 
 
 		s_Data.QuadPosition[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadPosition[1] = { 0.5f, -0.5f, 0.0f, 1.0f };
-		s_Data.QuadPosition[2] = { 0.5f, 0.5f, 0.0f, 1.0f };
-		s_Data.QuadPosition[3] = { -0.5f, 0.5f, 0.0f, 1.0f };
+		s_Data.QuadPosition[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
+		s_Data.QuadPosition[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
+		s_Data.QuadPosition[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+
+
+		s_Data.CubeLightingPosition[0] = { -0.1f, -0.1f,  0.1f, 1.0f};
+		s_Data.CubeLightingPosition[1] = { -0.1f, -0.1f, -0.1f, 1.0f};
+		s_Data.CubeLightingPosition[2] = {  0.1f, -0.1f, -0.1f, 1.0f};
+		s_Data.CubeLightingPosition[3] = {  0.1f, -0.1f,  0.1f, 1.0f};
+		s_Data.CubeLightingPosition[4] = { -0.1f,  0.1f,  0.1f, 1.0f};
+		s_Data.CubeLightingPosition[5] = { -0.1f,  0.1f, -0.1f, 1.0f};
+		s_Data.CubeLightingPosition[6] = {  0.1f,  0.1f, -0.1f, 1.0f};
+		s_Data.CubeLightingPosition[7] = {  0.1f,  0.1f,  0.1f, 1.0f};
+
+
 
 		s_Data.CameraUniformBuffer = UniformBuffer::Create(sizeof(Renderer2DData::CameraData), 0);
+		s_Data.LightUniformBuffer = UniformBuffer::Create(sizeof(Renderer2DData::LightData), 1);
 		
 	}
 
@@ -240,6 +321,8 @@ namespace Ezzoo {
 		
 		s_Data.CameraBuffer.ViewProjection = camera.GetViewProjection();
 		s_Data.CameraUniformBuffer->SetData(&s_Data.CameraBuffer, sizeof(Renderer2DData::CameraData));
+
+		s_Data.LightUniformBuffer->SetData(&s_Data.LightBuffer, sizeof(Renderer2DData::LightData));
 
 		StartBatch();
 	}
@@ -284,6 +367,9 @@ namespace Ezzoo {
 		s_Data.QuadIndciesCount = 0;
 		s_Data.QuadVertexPtr = s_Data.QuadVertexBase;
 
+		s_Data.CubeLightingIndciesCount= 0;
+		s_Data.CubeLightingVertexPtr = s_Data.CubeLightingVertexBase;
+
 		s_Data.CircleIndciesCount = 0;
 		s_Data.CircleVertexPtr = s_Data.CircleVertexBase;
 
@@ -307,6 +393,18 @@ namespace Ezzoo {
 
 				s_Data.QuadShader->Bind();
 				RendererCommand::DrawIndexed(s_Data.RendererVA, s_Data.QuadIndciesCount);
+
+				s_Data.stats.DrawCalls++;
+			}
+
+			if (s_Data.CubeLightingIndciesCount)
+			{
+
+				uint32_t dataSize = (uint32_t)((uint8_t*)s_Data.CubeLightingVertexPtr - (uint8_t*)s_Data.CubeLightingVertexBase);
+				s_Data.CubeLightingVB->SetData(s_Data.CubeLightingVertexBase, dataSize);
+
+				s_Data.CubeLightingShader->Bind();
+				RendererCommand::DrawIndexed(s_Data.CubeLightingVA, s_Data.CubeLightingIndciesCount);
 
 				s_Data.stats.DrawCalls++;
 			}
@@ -718,6 +816,26 @@ namespace Ezzoo {
 			DrawQuad(transform, component.Color, entityID);
 		}
 	
+	}
+
+	void Renderer2D::DrawCube(const glm::vec3& position, const glm::vec4& color, int entityID)
+	{
+
+		 glm::mat4 transform = glm::translate(glm::mat4(1.0f), position);
+
+		s_Data.LightBuffer.LightColor = color;
+
+		for (size_t i = 0; i < 8; i++)
+		{
+			s_Data.CubeLightingVertexPtr->Position = transform * s_Data.CubeLightingPosition[i];
+			s_Data.CubeLightingVertexPtr->Color = color;
+			s_Data.CubeLightingVertexPtr->EntityID = entityID;
+			s_Data.CubeLightingVertexPtr++;
+		}
+
+
+		s_Data.CubeLightingIndciesCount += 12;
+		//s_Data.stats.QuadCount += 2;
 	}
 
 	void Renderer2D::DrawCircle(const glm::mat4& transform, const glm::vec4& color, float thickness, float fade, int entityID)

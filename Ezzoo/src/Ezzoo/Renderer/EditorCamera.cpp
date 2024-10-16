@@ -29,7 +29,6 @@ namespace Ezzoo {
 		m_Position = CalculatePosition();
 
 		glm::quat orientation = GetOrientation();
-		m_ModalMatrix = glm::translate(glm::mat4(1.0f), m_Position);
 		m_ViewMatrix = glm::translate(glm::mat4(1.0f), m_Position) * glm::toMat4(orientation);
 		m_ViewMatrix = glm::inverse(m_ViewMatrix);
 	}

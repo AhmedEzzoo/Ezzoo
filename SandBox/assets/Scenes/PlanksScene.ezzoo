@@ -1,0 +1,31 @@
+Scene: Untitled
+Entities:
+  - Entity: 13820355814173317135
+    TagComponent:
+      Tag: Camera
+    TransformComponent:
+      Translation: [1.41324663, -0.110084221, 0.778746128]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 0
+        PrespectiveFOV: 0.785398185
+        PrespectiveNear: 0.00999999978
+        PrespectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 4335114915322496224
+    TagComponent:
+      Tag: Planks
+    TransformComponent:
+      Translation: [1.94256234, -0.123369455, 1.45891953]
+      Rotation: [-1.59962535, -1.67638632e-08, -1.6391283e-07]
+      Scale: [3.20745683, 3.85934544, 0.999930441]
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      Texture: assets\Pictures\planks.png
+      TillingFactor: 1

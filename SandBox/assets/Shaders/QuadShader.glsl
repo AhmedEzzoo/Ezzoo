@@ -11,6 +11,7 @@ layout(location = 5) in int a_EntityID;
 layout(std140, binding = 0) uniform Camera
 {
 	mat4 u_ViewProjection;
+	mat4 u_Model;
 };
 
 struct VertexOutput
@@ -34,7 +35,7 @@ void main()
 	v_EntityID = a_EntityID;
 
 
-	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
+	gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
 }
 
 
@@ -59,11 +60,17 @@ layout (location= 5) in flat int v_EntityID;
 
 
 layout (binding = 0) uniform sampler2D u_Texture[32];
+layout (binding = 1) uniform Light 
+{
+	vec4 u_LightColor;
+
+};
+
 
 void main()
 {
 
-	vec4 texColor = Input.Color;
+	vec4 texColor = Input.Color ;
 
 	switch(int(v_TextSlot))
 	{
@@ -100,7 +107,7 @@ void main()
 		case 30: texColor *= texture(u_Texture[30], Input.TextCoord * Input.TilingFactor); break;
 		case 31: texColor *= texture(u_Texture[31], Input.TextCoord * Input.TilingFactor); break;
 	}
-	color = texColor;
+	color = texColor *  u_LightColor;
 
 	if (color.a == 0.0)
 		discard;
