@@ -9,6 +9,7 @@ include "Ezzoo/vendor/Glad"
 include "Ezzoo/vendor/imgui"
 include "Ezzoo/vendor/yaml-cpp"
 include "Ezzoo/vendor/Box2D"
+include "Ezzoo-ScriptCore"
 
 project "Ezzoo"
 	location "Ezzoo"
@@ -46,7 +47,9 @@ project "Ezzoo"
 		"imgui",
 		"yaml-cpp",
 		"Box2D",
-		"opengl32.lib"
+		"opengl32.lib",
+
+		--"Ezzoo/vendor/mono/lib/Debug/mono-2.0-sgen.lib"
 	}
 
 	defines
@@ -68,6 +71,7 @@ project "Ezzoo"
 		"%{prj.name}/vendor/entt/include",
 		"%{prj.name}/vendor/yaml-cpp/include",
 		"%{prj.name}/vendor/Box2D/include",
+		"%{prj.name}/vendor/mono/include",
 		"D:/C++ visual studio/Vulkan/Include",
 
 		"%{prj.name}/vendor/ImGuizmo"
@@ -92,7 +96,8 @@ project "Ezzoo"
 			"D:/C++ visual studio/Vulkan/Lib/shaderc_sharedd.lib",
 			"D:/C++ visual studio/Vulkan/Lib/spirv-cross-cored.lib",
 			"D:/C++ visual studio/Vulkan/Lib/spirv-cross-glsld.lib",
-			--"D:/C++ visual studio/Vulkan/Lib/SPIRV-Tools.lib"
+			--"Ezzoo/vendor/mono/lib/Debug/libmono-static-sgen.lib"
+			"Ezzoo/vendor/mono/lib/Debug/mono-2.0-sgen.lib"
 		}
 
 
@@ -106,6 +111,8 @@ project "Ezzoo"
 			"D:/C++ visual studio/Vulkan/Lib/spirv-cross-core.lib",
 			"D:/C++ visual studio/Vulkan/Lib/spirv-cross-glsl.lib",
 			--"D:/C++ visual studio/Vulkan/Lib/SPIRV-Toolsd.lib"
+			--"Ezzoo/vendor/mono/lib/Release/libmono-static-sgen.lib"
+			"Ezzoo/vendor/mono/lib/Release/mono-2.0-sgen.lib"
 		}
 
 	filter "configurations:Dist"

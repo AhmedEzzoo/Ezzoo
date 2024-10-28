@@ -11,7 +11,7 @@ layout(location = 5) in int a_EntityID;
 layout(std140, binding = 0) uniform Camera
 {
 	mat4 u_ViewProjection;
-	mat4 u_Model;
+	
 };
 
 struct VertexOutput
@@ -23,19 +23,20 @@ struct VertexOutput
 
 
 layout (location = 0) out VertexOutput Output;
-layout (location = 4) out flat float v_TextSlot;
-layout (location = 5) out flat int v_EntityID;
+layout (location = 3) out flat float v_TextSlot;
+layout (location = 4) out flat int v_EntityID;
 
 void main()
 {
 	Output.Color = a_Color;
 	Output.TextCoord = a_TextCoord;
 	Output.TilingFactor = a_TilingFactor;
+
 	v_TextSlot = a_TextSlot;
 	v_EntityID = a_EntityID;
 
 
-	gl_Position = u_ViewProjection * u_Model * vec4(a_Position, 1.0);
+	gl_Position = u_ViewProjection * vec4(a_Position, 1.0f);
 }
 
 
@@ -55,23 +56,18 @@ struct VertexOutput
 
 
 layout (location= 0) in VertexOutput Input;
-layout (location= 4) in flat float v_TextSlot;
-layout (location= 5) in flat int v_EntityID;
+layout (location= 3) in flat float v_TextSlot;
+layout (location= 4) in flat int v_EntityID;
 
 
 layout (binding = 0) uniform sampler2D u_Texture[32];
-layout (binding = 1) uniform Light 
-{
-	vec4 u_LightColor;
-
-};
-
 
 void main()
 {
 
-	vec4 texColor = Input.Color ;
+	vec4 texColor = Input.Color;
 
+	
 	switch(int(v_TextSlot))
 	{
 		case  0: texColor *= texture(u_Texture[0], Input.TextCoord * Input.TilingFactor); break;
@@ -107,7 +103,7 @@ void main()
 		case 30: texColor *= texture(u_Texture[30], Input.TextCoord * Input.TilingFactor); break;
 		case 31: texColor *= texture(u_Texture[31], Input.TextCoord * Input.TilingFactor); break;
 	}
-	color = texColor *  u_LightColor;
+	color = texColor;
 
 	if (color.a == 0.0)
 		discard;

@@ -34,6 +34,12 @@
     <Filter Include="src\Scene">
       <UniqueIdentifier>{0A06D2B3-7670-862A-BFAE-37D02B58647F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Scripting">
+      <UniqueIdentifier>{6FBC2D98-DB7C-A9CE-A4B7-F24B1037EEAA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Scripting\ScriptEngine">
+      <UniqueIdentifier>{29BD9013-15CD-3CE4-7E86-A1026AB52B7D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
     </Filter>
@@ -218,6 +224,9 @@
     </ClInclude>
     <ClInclude Include="src\Scene\ScriptableEntity.h">
       <Filter>src\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scripting\ScriptEngine\ScriptEngine.h">
+      <Filter>src\Scripting\ScriptEngine</Filter>
     </ClInclude>
     <ClInclude Include="src\ezpch.h">
       <Filter>src</Filter>
@@ -1582,6 +1591,9 @@
     </ClCompile>
     <ClCompile Include="src\Scene\SceneSerialize.cpp">
       <Filter>src\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scripting\ScriptEngine\ScriptEngine.cpp">
+      <Filter>src\Scripting\ScriptEngine</Filter>
     </ClCompile>
     <ClCompile Include="src\ezpch.cpp">
       <Filter>src</Filter>

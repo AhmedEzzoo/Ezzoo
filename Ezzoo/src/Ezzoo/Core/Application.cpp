@@ -4,6 +4,10 @@
 #include "Ezzoo/Core/Core.h"
 
 #include "Ezzoo/Core/TimeStep.h"
+
+#include "Scripting/ScriptEngine/ScriptEngine.h"
+
+
 namespace Ezzoo {
 
 	Application* Application::s_Instance = nullptr;
@@ -26,6 +30,8 @@ namespace Ezzoo {
 		m_AppWindow->SetEventCallBack(EZZOO_BIND(Application::OnEvent));
 		
 		Renderer::Init();
+		ScriptEngine::Init();
+
 
 		m_ImGuiLayer = new ImGuiLayer();
 		PushOverLayer(m_ImGuiLayer);

@@ -1,0 +1,6 @@
+D:\C++ visual studio\dev\Ezzoo\SandBox\Resources\Scripts\Intermediates\Debug\Ezzoo-ScriptCore.csproj.AssemblyReference.cache
+D:\C++ visual studio\dev\Ezzoo\SandBox\Resources\Scripts\Intermediates\Debug\Ezzoo-ScriptCore.csproj.CoreCompileInputs.cache
+D:\C++ visual studio\dev\Ezzoo\SandBox\Resources\Scripts\Intermediates\Debug\Ezzoo-ScriptCore.dll
+D:\C++ visual studio\dev\Ezzoo\SandBox\Resources\Scripts\Intermediates\Debug\Ezzoo-ScriptCore.pdb
+D:\C++ visual studio\dev\Ezzoo\SandBox\Resources\Scripts\Ezzoo-ScriptCore.dll
+D:\C++ visual studio\dev\Ezzoo\SandBox\Resources\Scripts\Ezzoo-ScriptCore.pdb

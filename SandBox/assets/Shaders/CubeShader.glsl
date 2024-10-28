@@ -8,24 +8,26 @@ layout(location = 2) in int a_EntityID;
 layout(std140, binding = 0) uniform Camera
 {
 	mat4 u_ViewProjection;
-	mat4 u_Modal;
 };
 
 struct VertexOutput
 {
 	vec4 Color;
+	vec3 Modal;
 };
 
 
 layout (location = 0) out VertexOutput Output;
-layout (location = 1) out flat int v_EntityID;
+layout (location = 4) out flat int v_EntityID;
 
 void main()
 {
 	Output.Color = a_Color;
+	Output.Modal = a_Position;
+
 	v_EntityID = a_EntityID;
 
-	gl_Position = u_ViewProjection * u_Modal * vec4(a_Position, 1.0);
+	gl_Position = u_ViewProjection * vec4(a_Position, 1.0);
 }
 
 
@@ -38,12 +40,13 @@ layout(location = 1) out int o_EntityID;
 struct VertexOutput
 {
 	vec4 Color;
+	vec3 Modal;
 };
 
 
 
-layout (location= 0) in VertexOutput Input;
-layout (location= 1) in flat int v_EntityID;
+layout (location = 0) in VertexOutput Input;
+layout (location = 4) in flat int v_EntityID;
 
 void main()
 {

@@ -55,8 +55,6 @@ namespace Ezzoo {
 		static void DrawRect(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color, int entityID = -1);
 		static void DrawRect(const glm::mat4& transform, const glm::vec4& color, int entityID = -1);
 
-		static void DrawCube(const glm::vec3& position, const glm::vec4& color, int entityID = -1);
-
 		static void SetLineWidth(float lineWidth);
 		static float GetLineWidth();
 
