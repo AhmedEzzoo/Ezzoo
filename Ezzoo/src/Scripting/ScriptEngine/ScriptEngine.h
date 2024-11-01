@@ -29,7 +29,7 @@ namespace Ezzoo {
 		static void OnRunTimeStop();
 		static void OnCreate(Entity entity);
 		static void OnUpdate(Entity entity, TimeStep ts);
-
+		static Scene* GetActiveContext()  { return m_ActiveScene; }
 	private :
 		static MonoObject* Instantiate(MonoClass* className);
 		static void InitMono();
@@ -38,6 +38,9 @@ namespace Ezzoo {
 		
 	
 		static void LoadAssymblyClasses();
+	private :
+		static Scene* m_ActiveScene;
+
 
 		friend class ScriptClass;
 

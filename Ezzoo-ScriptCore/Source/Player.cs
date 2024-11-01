@@ -17,7 +17,7 @@ namespace Sandbox
 
         void OnUpdate (float ts)
         {
-            Console.WriteLine($"Player.OnUpdate: {ts}");
+            InternalCalls.Entity_GetTranslation(ID);
         }
 
 

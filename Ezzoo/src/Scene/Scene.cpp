@@ -15,6 +15,8 @@
 
 namespace Ezzoo {
 
+	std::unordered_map<UUID, entt::entity> Scene::m_EnttMap = {};
+
 
 	static b2BodyType RigidBodyComponentTypeToBox2DType(RigidBodyComponent component)
 	{
@@ -89,7 +91,7 @@ namespace Ezzoo {
 		newScene->m_ViewportWidth = other->m_ViewportWidth;
 		newScene->m_ViewportHeight = other->m_ViewportHeight;
 
-		std::unordered_map<UUID, entt::entity> enttMap;
+		//std::unordered_map<UUID, entt::entity> enttMap;
 
 		auto& srcRegister = other->m_Registry;
 		auto& dstRegister = newScene->m_Registry;
@@ -102,19 +104,19 @@ namespace Ezzoo {
 			const auto& name = srcRegister.get<TagComponent>(e).TagName;
 
 			Entity entt = newScene->CreateEntityWithID(id, name);
-			enttMap[id] = (entt::entity)entt;
+			m_EnttMap[id] = (entt::entity)entt;
 		}
 
 
 
-		CopyComponent<TransformComponent>(dstRegister, srcRegister, enttMap);
-		CopyComponent<ScriptComponent>(dstRegister, srcRegister, enttMap);
-		CopyComponent<SpriteRendererComponent>(dstRegister, srcRegister, enttMap);
-		CopyComponent<CircleComponent>(dstRegister, srcRegister, enttMap);
-		CopyComponent<CameraComponent>(dstRegister, srcRegister, enttMap);
-		CopyComponent<RigidBodyComponent>(dstRegister, srcRegister, enttMap);
-		CopyComponent<BoxColliderComponent>(dstRegister, srcRegister, enttMap);
-		CopyComponent<CircleColliderComponent>(dstRegister, srcRegister, enttMap);
+		CopyComponent<TransformComponent>(dstRegister, srcRegister, m_EnttMap);
+		CopyComponent<ScriptComponent>(dstRegister, srcRegister, m_EnttMap);
+		CopyComponent<SpriteRendererComponent>(dstRegister, srcRegister, m_EnttMap);
+		CopyComponent<CircleComponent>(dstRegister, srcRegister, m_EnttMap);
+		CopyComponent<CameraComponent>(dstRegister, srcRegister, m_EnttMap);
+		CopyComponent<RigidBodyComponent>(dstRegister, srcRegister, m_EnttMap);
+		CopyComponent<BoxColliderComponent>(dstRegister, srcRegister, m_EnttMap);
+		CopyComponent<CircleColliderComponent>(dstRegister, srcRegister, m_EnttMap);
 
 		return newScene;
 	
@@ -475,6 +477,12 @@ namespace Ezzoo {
 		Renderer2D::EndScene();
 	}
 
+
+	Entity Scene::GetEntityByID(UUID id)
+	{
+		//if (m_EnttMap != m_EnttMap.end())
+		return {};
+	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{		

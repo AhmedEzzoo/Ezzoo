@@ -4,6 +4,8 @@
 
 #include "mono/jit/jit.h"
 
+#include "Scene/Component.h"
+#include "ScriptEngine.h"
 
 #define EZZOO_ADD_INTERNAL_CALL(Name) mono_add_internal_call("Ezzoo.InternalCalls::"#Name, Name);
 
@@ -33,11 +35,20 @@ namespace Ezzoo {
 		return rVec;
 	}
 
+	static glm::vec3* Entity_GetTranslation(UUID id)
+	{
+		Scene* scene = ScriptEngine::GetActiveContext();
+		return nullptr;
+	}
+
+
 	void ScriptGlue::InternalCalls()
 	{
 		EZZOO_ADD_INTERNAL_CALL(NativeLog);
 		EZZOO_ADD_INTERNAL_CALL(NativeVectorLog);
 		EZZOO_ADD_INTERNAL_CALL(NativeVectorCross);
+
+		EZZOO_ADD_INTERNAL_CALL(Entity_GetTranslation);
 	}
 
 

@@ -11,7 +11,7 @@
 
 namespace Ezzoo {
 
-	
+	Scene* ScriptEngine::m_ActiveScene = nullptr;
 	struct MonoData
 	{
 		MonoDomain* RootDomain = nullptr;
@@ -25,7 +25,6 @@ namespace Ezzoo {
 		std::unordered_map<std::string, Ref<ScriptClass>> EntityClasses;
 		std::unordered_map<UUID, Ref<ScriptInstance>> EntityInstances;
 
-		Scene* ActiveScene = nullptr;
 	};
 
 
@@ -226,12 +225,12 @@ namespace Ezzoo {
 
 	void ScriptEngine::OnRunTimeStart(Scene* scene)
 	{
-		s_MonoData->ActiveScene = scene;
+		m_ActiveScene = scene;
 	}
 
 	void ScriptEngine::OnRunTimeStop()
 	{
-		s_MonoData->ActiveScene = nullptr;
+		m_ActiveScene = nullptr;
 	}
 
 	void ScriptEngine::OnCreate(Entity entity)

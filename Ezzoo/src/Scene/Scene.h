@@ -30,6 +30,7 @@ namespace Ezzoo {
 		void OnUpdateScript(TimeStep ts);
 		void OnUpdateSimulate(TimeStep ts, EditorCamera& camera);
 
+		Entity GetEntityByID(UUID id);
 
 		void DestroyEntity(Entity entity);
 
@@ -61,9 +62,14 @@ namespace Ezzoo {
 		
 		b2World* m_Physicsworld = nullptr;
 
+		static std::unordered_map<UUID, entt::entity> m_EnttMap;
+
+
 		friend class Entity;
 		friend class SceneSerialize;
 		friend class SceneHierarchyPanel;
+
+
 
 
 	};
