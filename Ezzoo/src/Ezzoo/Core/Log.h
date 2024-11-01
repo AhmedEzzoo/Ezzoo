@@ -3,6 +3,10 @@
 #include "spdlog/spdlog.h"
 #include "spdlog/fmt/ostr.h"
 #include "spdlog/sinks/stdout_color_sinks.h"
+
+#define GLM_ENABLE_EXPERIMENTAL
+#include "glm/gtx/string_cast.hpp"
+
 namespace Ezzoo {
 	class Log
 	{
@@ -17,6 +21,15 @@ namespace Ezzoo {
 		static std::shared_ptr<spdlog::logger> s_ClientLogger;
 
 	};
+
+
+}
+
+template <typename OStream, glm::length_t L, typename T, glm::qualifier Q>
+inline OStream& operator<< (OStream& os, const glm::vec<L, T, Q>& vector)
+{
+
+	return  os << glm::to_string(vector);
 
 }
 

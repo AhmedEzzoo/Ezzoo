@@ -2,6 +2,7 @@
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
+
 #include "Scene/Component.h"
 
 #include <glm/gtc/type_ptr.hpp>
@@ -254,62 +255,13 @@ namespace Ezzoo {
 
 		if (ImGui::BeginPopup("Add Component"))
 		{
-			if (!m_SelectedEntity.HasComponent<CameraComponent>())
-			{
-				if (ImGui::MenuItem("Camera"))
-				{
-					m_SelectedEntity.AddComponent<CameraComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-			if (!m_SelectedEntity.HasComponent<SpriteRendererComponent>())
-			{
-				if (ImGui::MenuItem("Sprite Renderer"))
-				{
-
-					m_SelectedEntity.AddComponent<SpriteRendererComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-
-			if (!m_SelectedEntity.HasComponent<RigidBodyComponent>())
-			{
-				if (ImGui::MenuItem("Rigid Body"))
-				{
-
-					m_SelectedEntity.AddComponent<RigidBodyComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-			if (!m_SelectedEntity.HasComponent<BoxColliderComponent>())
-			{
-				if (ImGui::MenuItem("Box Coillider"))
-				{
-
-					m_SelectedEntity.AddComponent<BoxColliderComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-
-			if (!m_SelectedEntity.HasComponent<CircleComponent>())
-			{
-				if (ImGui::MenuItem("Circle"))
-				{
-
-					m_SelectedEntity.AddComponent<CircleComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
-
-			if (!m_SelectedEntity.HasComponent<CircleColliderComponent>())
-			{
-				if (ImGui::MenuItem("Circle Coillider"))
-				{
-
-					m_SelectedEntity.AddComponent<CircleColliderComponent>();
-					ImGui::CloseCurrentPopup();
-				}
-			}
+			DisplayAddComponentEntry<CameraComponent>("Camera");
+			DisplayAddComponentEntry<ScriptComponent>("Script");
+			DisplayAddComponentEntry<SpriteRendererComponent>("Sprite Renderer");
+			DisplayAddComponentEntry<RigidBodyComponent>("Rigid Body");
+			DisplayAddComponentEntry<BoxColliderComponent>("Box Collider");
+			DisplayAddComponentEntry<CircleComponent>("Circle");
+			DisplayAddComponentEntry<CircleColliderComponent>("Circle Collider");
 
 			ImGui::EndPopup();
 		}
@@ -329,6 +281,18 @@ namespace Ezzoo {
 					
 
 			});
+
+		DrawComponent<ScriptComponent>("Script", entity, [](auto& component) {
+
+			static char buf[64];
+			strcpy(buf, component.ClassName.c_str());
+			if (ImGui::InputText("##Class", buf, sizeof(buf)))
+			{
+				component.ClassName = buf;
+			}
+
+			});
+
 
 		DrawComponent<SpriteRendererComponent>("Sprite", entity, [](auto& component) {
 				
@@ -450,6 +414,9 @@ namespace Ezzoo {
 			}
 				ImGui::Checkbox("Fixed Rotation", &component.FixedRotation);
 		});
+
+
+
 
 
 		DrawComponent<BoxColliderComponent>("BoxCollider 2D", entity, [](auto& component) {

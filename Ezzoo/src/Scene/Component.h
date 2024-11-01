@@ -97,6 +97,15 @@ namespace Ezzoo {
 		CameraComponent(const CameraComponent & other) = default;
 	};
 
+	struct ScriptComponent
+	{
+
+		std::string ClassName;
+
+		ScriptComponent() = default;
+		ScriptComponent(const ScriptComponent& other) = default;
+	};
+
 
 	struct SpriteRendererComponent
 	{

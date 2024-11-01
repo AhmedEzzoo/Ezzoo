@@ -26,7 +26,19 @@ namespace Ezzoo {
 	private :
 		void DrawEntityNode(Entity entity);
 		void DrawComponents(Entity entity);
-
+		
+		template <typename T>
+		void DisplayAddComponentEntry(const std::string& name)
+		{
+			if (!m_SelectedEntity.HasComponent<T>())
+			{
+				if (ImGui::MenuItem(name.c_str()))
+				{
+					m_SelectedEntity.AddComponent<T>();
+					ImGui::CloseCurrentPopup();
+				}
+			}
+		}
 
 	private :
 

@@ -117,7 +117,7 @@ namespace Ezzoo {
 
 Ezzoo::Application* Ezzoo::CreatApplication(ApplicationSpecification& specs)
 {
-	specs.Name = "SandBox";
+	specs.Name = "Ezzoo";
 	specs.path  = "../SandBox";
 
 

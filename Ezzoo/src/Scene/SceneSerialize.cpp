@@ -190,6 +190,18 @@ namespace Ezzoo {
 			out << YAML::EndMap;
 		}
 
+		if (entity.HasComponent<ScriptComponent>())
+		{
+			out << YAML::Key << "ScriptComponent";
+			out << YAML::BeginMap;
+
+			auto& component = entity.GetComponent<ScriptComponent>();
+
+			out << YAML::Key << "ClassName" << YAML::Value << component.ClassName;
+			out << YAML::EndMap;
+		}
+
+
 		if (entity.HasComponent<CircleComponent>())
 		{
 			out << YAML::Key << "CircleComponent";
@@ -376,7 +388,16 @@ namespace Ezzoo {
 					tc.Scale = transformComponent["Scale"].as<glm::vec3>();
 				}
 
-				auto CComponent = entity["CircleComponent"]; //TransformComponent
+				auto sComponent = entity["ScriptComponent"]; //ScriptComponent
+				if (sComponent)
+				{
+					auto& sc = deserialzedEntity.AddComponent<ScriptComponent>();
+
+					sc.ClassName = sComponent["ClassName"].as<std::string>();
+				}
+
+
+				auto CComponent = entity["CircleComponent"]; //CircleComponent
 				if (CComponent)
 				{
 					auto& cc = deserialzedEntity.AddComponent<CircleComponent>();

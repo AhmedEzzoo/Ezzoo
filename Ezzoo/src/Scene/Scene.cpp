@@ -10,6 +10,8 @@
 #include "box2d/b2_polygon_shape.h"
 #include "box2d/b2_circle_shape.h"
 
+#include "Scripting/ScriptEngine/ScriptEngine.h"
+
 
 namespace Ezzoo {
 
@@ -106,6 +108,7 @@ namespace Ezzoo {
 
 
 		CopyComponent<TransformComponent>(dstRegister, srcRegister, enttMap);
+		CopyComponent<ScriptComponent>(dstRegister, srcRegister, enttMap);
 		CopyComponent<SpriteRendererComponent>(dstRegister, srcRegister, enttMap);
 		CopyComponent<CircleComponent>(dstRegister, srcRegister, enttMap);
 		CopyComponent<CameraComponent>(dstRegister, srcRegister, enttMap);
@@ -121,7 +124,7 @@ namespace Ezzoo {
 	{
 		Entity newEntity = CreateEntity(src.GetComponent<TagComponent>().TagName);
 
-		CopyComponentIfExist<TransformComponent, SpriteRendererComponent, CircleComponent, RigidBodyComponent, CameraComponent, BoxColliderComponent, CircleColliderComponent>(newEntity, src);
+		CopyComponentIfExist<TransformComponent, ScriptComponent,  SpriteRendererComponent, CircleComponent, RigidBodyComponent, CameraComponent, BoxColliderComponent, CircleColliderComponent>(newEntity, src);
 
 		return newEntity;
 
@@ -153,16 +156,28 @@ namespace Ezzoo {
 	{
 		OnPhysics2DRender();
 
-	}
-	void Scene::OnSimulationStart()
-	{
-		OnPhysics2DRender();
+		ScriptEngine::OnRunTimeStart(this);
+		auto scriptViewEntities = m_Registry.view<ScriptComponent>();
+		for (auto entity : scriptViewEntities)
+		{
+			Entity ent{ entity, this };
+			ScriptEngine::OnCreate(ent);
+		}
 	}
 
 	void Scene::OnRunTimeStop()
 	{
 		delete m_Physicsworld;
+		ScriptEngine::OnRunTimeStop();
+	
 	}
+
+	void Scene::OnSimulationStart()
+	{
+		OnPhysics2DRender();
+
+	}
+
 
 	void Scene::OnSimulationStop()
 	{
@@ -273,10 +288,24 @@ namespace Ezzoo {
 	void Scene::OnUpdateRunTime(TimeStep ts)
 	{
 
-		//Script 2D
+		//C# Script 
+		{
+			auto view = m_Registry.view<ScriptComponent>();
+
+			for (auto entity : view)
+			{
+				Entity ent{ entity, this };
+				ScriptEngine::OnUpdate(ent, ts);
+			}
+
+		}
+
+
+
+
+		//Native Script
 
 		{
-
 			m_Registry.view<NativeScriptComponent>().each([=](auto entity, auto& nsc) {
 
 				if (!nsc.Instance)
@@ -291,15 +320,12 @@ namespace Ezzoo {
 				});
 
 		}
-
+	
 		//Physics
-
-
-			
 			const int32_t positionIteration = 2;
 			const int32_t velocityIteration = 6;
-
 			m_Physicsworld->Step(ts, velocityIteration, positionIteration);
+
 			auto view = m_Registry.view<RigidBodyComponent>();
 			for (auto entt : view)
 			{
@@ -525,6 +551,10 @@ namespace Ezzoo {
 
 	template <>
 	void Scene::OnComponentAdded(Entity entity, NativeScriptComponent& component)
+	{
+	}
+	template <>
+	void Scene::OnComponentAdded(Entity entity, ScriptComponent& component)
 	{
 	}
 	template <>
