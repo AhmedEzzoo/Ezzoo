@@ -197,5 +197,5 @@ namespace Ezzoo {
 
 	};
 
-	using AllComponents = ComponentsGroup<TransformComponent, SpriteRendererComponent, CameraComponent, CircleComponent, BoxColliderComponent, RigidBodyComponent, CircleColliderComponent>;
+	using AllComponents = ComponentsGroup<TransformComponent, ScriptComponent, SpriteRendererComponent, CameraComponent, CircleComponent, BoxColliderComponent, RigidBodyComponent, CircleColliderComponent>;
 }

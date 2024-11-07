@@ -1,6 +1,7 @@
 workspace "Ezzoo"
 	architecture "x64"
 	configurations {"Debug", "Release", "Dist"}
+	startproject "SandBox"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 

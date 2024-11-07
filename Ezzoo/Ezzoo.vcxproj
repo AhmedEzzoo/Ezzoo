@@ -191,8 +191,8 @@
     <ClInclude Include="src\Scene\SceneSerialize.h" />
     <ClInclude Include="src\Scene\ScriptableEntity.h" />
     <ClInclude Include="src\Scripting\ScriptEngine\ScriptEngine.h" />
-    <ClInclude Include="src\ezpch.h" />
     <ClInclude Include="src\Scripting\ScriptEngine\ScriptGlue.h" />
+    <ClInclude Include="src\ezpch.h" />
     <ClInclude Include="vendor\ImGuizmo\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
@@ -649,10 +649,10 @@
     <ClCompile Include="src\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Scene\SceneSerialize.cpp" />
     <ClCompile Include="src\Scripting\ScriptEngine\ScriptEngine.cpp" />
+    <ClCompile Include="src\Scripting\ScriptEngine\ScriptGlue.cpp" />
     <ClCompile Include="src\ezpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Scripting\ScriptEngine\ScriptGlue.cpp" />
     <ClCompile Include="vendor\ImGuizmo\ImGuizmo\ImGuizmo.cpp">
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>

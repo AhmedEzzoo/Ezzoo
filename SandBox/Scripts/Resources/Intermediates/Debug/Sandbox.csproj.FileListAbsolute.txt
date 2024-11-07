@@ -1,0 +1,8 @@
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Scripts\Sandbox.dll
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Scripts\Sandbox.pdb
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Intermediates\Debug\Sandbox.csproj.AssemblyReference.cache
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Intermediates\Debug\Sandbox.csproj.CoreCompileInputs.cache
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Intermediates\Debug\Sandbox.csproj.CopyComplete
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Intermediates\Debug\Sandbox.dll
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Intermediates\Debug\Sandbox.pdb
+D:\C++ visual studio\dev\Ezzoo\SandBox\Scripts\Resources\Scripts\Ezzoo-ScriptCore.pdb

@@ -40,8 +40,6 @@ namespace Ezzoo {
 
 		}
 
-
-
 		template <typename T>
 		bool HasComponent()
 		{
@@ -54,6 +52,8 @@ namespace Ezzoo {
 		{
 			m_Scene->m_Registry.remove<T>(m_Entity);
 		}
+		
+		 UUID& GetUUID();
 
 		operator uint32_t()
 		{

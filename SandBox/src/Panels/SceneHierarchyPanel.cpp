@@ -1,4 +1,6 @@
 #include "SceneHierarchyPanel.h"
+#include "Scripting/ScriptEngine/ScriptEngine.h"
+
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_internal.h>
@@ -282,14 +284,78 @@ namespace Ezzoo {
 
 			});
 
-		DrawComponent<ScriptComponent>("Script", entity, [](auto& component) {
+		DrawComponent<ScriptComponent>("Script", entity, [scene = m_Context, entity](auto& component) {
 
-			static char buf[64];
-			strcpy(buf, component.ClassName.c_str());
-			if (ImGui::InputText("##Class", buf, sizeof(buf)))
-			{
-				component.ClassName = buf;
-			}
+			    static char buf[64];
+			    strcpy(buf, component.ClassName.c_str());
+			    if (ImGui::InputText("Class", buf, sizeof(buf)))
+			    {
+			    	component.ClassName = buf;
+			    }
+			    
+				if (scene->m_IsRunning)
+				{
+					const Ref<ScriptInstance> scriptInstance = ScriptEngine::GetInstance(entity);
+
+					if (scriptInstance)
+					{
+						const auto& fieldMap = scriptInstance->GetScriptClass()->GetFields();
+
+						for (const auto& [name, type] : fieldMap)
+						{
+							if (type.Field == ScriptFields::Float)
+							{
+								float val = scriptInstance->GetFieldValue<float>(name);
+								if (ImGui::DragFloat(name.c_str(), &val, 0.01f, 0.0f, 1.0f))
+								{
+									scriptInstance->SetFieldValue<float>(name, val);
+								}
+							}
+						}
+					}
+			    }
+				else
+				{
+
+					Ref<ScriptClass> scriptClass = ScriptEngine::GetEntityClass(component.ClassName);
+					if (scriptClass)
+					{
+						
+						const auto& fields = scriptClass->GetFields();
+						auto& fieldMap = ScriptEngine::GetEntityFieldMap(entity);
+
+
+						for (const auto& [name, field] : fields)
+						{
+							if (fieldMap.find(name) != fieldMap.end())
+							{
+								ScriptFieldInstance& scriptField = fieldMap.at(name);
+
+								// Display control to set it maybe
+								if (field.Field == ScriptFields::Float)
+								{
+									float data = scriptField.GetValue<float>();
+									if (ImGui::DragFloat(name.c_str(), &data))
+										scriptField.SetValue(data);
+								}
+							}
+							else
+							{
+								if (field.Field == ScriptFields::Float)
+								{
+									float data = 0.0f;
+									if (ImGui::DragFloat(name.c_str(), &data))
+									{
+										ScriptFieldInstance& fieldInstance = fieldMap[name];
+										fieldInstance.Field = field;
+										fieldInstance.SetValue(data);
+									}
+								}
+							}
+						}
+					}
+			
+				}
 
 			});
 

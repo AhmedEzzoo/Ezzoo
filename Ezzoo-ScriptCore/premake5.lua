@@ -3,8 +3,8 @@ project "Ezzoo-ScriptCore"
 	language "C#"
 	dotnetframework "4.7.2"
 
-	targetdir ("%{wks.location}/SandBox/Resources/Scripts")
-	objdir ("%{wks.location}/SandBox/Resources/Scripts/Intermediates")
+	targetdir ("../SandBox/Scripts/Resources/Scripts")
+	objdir ("../SandBox/Scripts/Resources/Scripts/Intermediates")
 
 	files
 	{

@@ -1,35 +1,33 @@
 Scene: Untitled
 Entities:
-  - Entity: 1114687600122290315
+  - Entity: 6009073980126931406
     TagComponent:
-      Tag: Square
+      Tag: Circle
     TransformComponent:
-      Translation: [-2.51253533, 2.55704904, -0.109395742]
-      Rotation: [-0.0169132743, -0.0275878515, 2.75374794]
-      Scale: [0.629966676, 0.629981339, 0.706488013]
-    ScriptComponent:
-      ClassName: Sandbox.Player
-    SpriteRendererComponent:
-      Color: [1, 1, 1, 1]
-      Texture: ""
-      TillingFactor: 1
-    RigidBody 2D:
-      Type: Dynamic
-      FixedRotation: false
-    BoxCollider 2D:
+      Translation: [-0.323330164, -0.843047619, 0]
+      Rotation: [0, 0, 0]
+      Scale: [2.44000006, 2.44000006, 2.44000006]
+    CircleComponent:
+      Color: [0.972549021, 0.411764711, 0.0235294122, 1]
+      Thickness: 0.119999997
+      Fade: 0.00499999989
+    CircleCollider 2D:
       Offset: [0, 0]
-      Size: [0.5, 0.5]
-      Denisty: 1
-      Friction: 0.720000029
-      Ristitution: 0.519999981
+      Raduis: 0.5
+      Density: 1
+      Friction: 0.5
+      Ristitution: 0
       RistitutionThreshold: 0.5
-  - Entity: 16186499675392833966
+    RigidBody 2D:
+      Type: Static
+      FixedRotation: false
+  - Entity: 17436474258532091043
     TagComponent:
-      Tag: First Floor
+      Tag: Second Floor
     TransformComponent:
-      Translation: [-2.64962745, -0.184086755, 0.0435218811]
-      Rotation: [0, 0, -0.765029192]
-      Scale: [6.98048306, 0.378337085, 0.980000019]
+      Translation: [0.397436619, -1.56268263, 0]
+      Rotation: [0, 0, 0.361678779]
+      Scale: [6.98047924, 0.378336877, 0.980000019]
     SpriteRendererComponent:
       Color: [0.970588207, 0.413647473, 0.0237889104, 1]
       Texture: ""
@@ -48,9 +46,11 @@ Entities:
     TagComponent:
       Tag: Camera
     TransformComponent:
-      Translation: [0, 3.96370888e-06, 4.80000019]
+      Translation: [0, 3.96370888e-06, 3.5]
       Rotation: [0, 0, 0]
       Scale: [1, 1, 1]
+    ScriptComponent:
+      ClassName: Sandbox.Camera
     CameraComponent:
       Camera:
         ProjectionType: 0
@@ -62,13 +62,13 @@ Entities:
         OrthographicFar: 1
       Primary: true
       FixedAspectRatio: false
-  - Entity: 17436474258532091043
+  - Entity: 16186499675392833966
     TagComponent:
-      Tag: Second Floor
+      Tag: First Floor
     TransformComponent:
-      Translation: [0.397436619, -1.56268263, 0.0435218811]
-      Rotation: [0, 0, 0.361678779]
-      Scale: [6.98047924, 0.378336877, 0.980000019]
+      Translation: [-2.64962745, -0.184086755, 0]
+      Rotation: [0, 0, -0.765029192]
+      Scale: [6.98048306, 0.378337085, 0.980000019]
     SpriteRendererComponent:
       Color: [0.970588207, 0.413647473, 0.0237889104, 1]
       Texture: ""
@@ -83,24 +83,26 @@ Entities:
       Friction: 0.5
       Ristitution: 0
       RistitutionThreshold: 0.5
-  - Entity: 6009073980126931406
+  - Entity: 1114687600122290315
     TagComponent:
-      Tag: Circle
+      Tag: Square
     TransformComponent:
-      Translation: [2.45503521, 2.11762094, 0]
-      Rotation: [0, 0, 0]
-      Scale: [1, 1, 1]
-    CircleComponent:
-      Color: [0.972549021, 0.411764711, 0.0235294122, 1]
-      Thickness: 0.119999997
-      Fade: 0.00499999989
-    CircleCollider 2D:
-      Offset: [0, 0]
-      Raduis: 0.5
-      Density: 1
-      Friction: 0.5
-      Ristitution: 0
-      RistitutionThreshold: 0.5
+      Translation: [-1.90151119, 1.51042259, 0]
+      Rotation: [-0.0169138703, -0.027587736, 2.75374794]
+      Scale: [0.351983517, 0.314751834, 0.515254676]
+    ScriptComponent:
+      ClassName: Sandbox.Player
+    SpriteRendererComponent:
+      Color: [1, 1, 1, 1]
+      Texture: ""
+      TillingFactor: 1
     RigidBody 2D:
       Type: Dynamic
       FixedRotation: false
+    BoxCollider 2D:
+      Offset: [0, 0]
+      Size: [0.5, 0.5]
+      Denisty: 1
+      Friction: 0.720000029
+      Ristitution: 0.519999981
+      RistitutionThreshold: 0.5

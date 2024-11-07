@@ -51,6 +51,8 @@ namespace Ezzoo {
 			return m_Registry.view<Components...>();
 		}
 
+	public :
+		bool m_IsRunning = false;
 
 	private:
 		template <typename T>
@@ -62,7 +64,7 @@ namespace Ezzoo {
 		
 		b2World* m_Physicsworld = nullptr;
 
-		static std::unordered_map<UUID, entt::entity> m_EnttMap;
+		std::unordered_map<UUID, entt::entity> m_EnttMap;
 
 
 		friend class Entity;

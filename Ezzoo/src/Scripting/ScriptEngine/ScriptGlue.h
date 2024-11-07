@@ -9,7 +9,7 @@ namespace Ezzoo {
 	public :
 
 		static void InternalCalls();
-
+		static void RegisterComponents();
 	private :
 
 

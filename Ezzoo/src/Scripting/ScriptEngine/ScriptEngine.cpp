@@ -6,12 +6,45 @@
 #include "glm/glm.hpp"
 #include "mono/jit/jit.h"
 #include "mono/metadata/assembly.h"
+#include "mono/metadata/object.h"
+#include "mono/metadata/attrdefs.h"
+
 
 #include "Scene/Component.h"
 
 namespace Ezzoo {
 
-	Scene* ScriptEngine::m_ActiveScene = nullptr;
+	/*	enum ScriptFields
+	{
+		None = 0,
+		Byte, Float, Int, Double, Long,
+		UByte, UInt, ULong,
+		Vector2, Vector3, Vector4
+	};*/
+	static std::unordered_map<std::string, ScriptFields> s_Fields =
+	{
+		{"System.Byte", ScriptFields::UByte},
+		{"System.SByte", ScriptFields::Byte},
+
+		{"System.Single", ScriptFields::Float},
+		{"System.Bool", ScriptFields::Bool},
+		{"System.Double", ScriptFields::Double},
+
+		{"System.Int32", ScriptFields::Int},
+		{"System.UInt32", ScriptFields::UInt},
+
+		{"System.Int64", ScriptFields::Long},
+		{"System.UInt64", ScriptFields::ULong},
+
+		{"Ezzoo.Vector2", ScriptFields::Vector2},
+		{"Ezzoo.Vector3", ScriptFields::Vector3},
+		{"Ezzoo.Vector4", ScriptFields::Vector4},
+
+		{"Ezzoo.Entity", ScriptFields::Entity},
+
+	};
+
+
 	struct MonoData
 	{
 		MonoDomain* RootDomain = nullptr;
@@ -20,11 +53,21 @@ namespace Ezzoo {
 		MonoAssembly* CoreAssy = nullptr;
 		MonoImage* CoreAssyImage = nullptr;
 
+
+		MonoAssembly* AppAssy = nullptr;
+		MonoImage* AppAssyImage = nullptr;
+
 		ScriptClass EntityClass;
 
 		std::unordered_map<std::string, Ref<ScriptClass>> EntityClasses;
 		std::unordered_map<UUID, Ref<ScriptInstance>> EntityInstances;
+		
+		//store all class attribute in Edit time before invoking Create in run Time
+		//Like Player class in C# is Entity and Has Attributes
+		//Also to control the Attributes value in Editing time 
+		std::unordered_map<UUID, ScriptFieldMap> EntityFieldMap;
 
+		Scene* ActiveScene = nullptr;
 	};
 
 
@@ -101,6 +144,42 @@ namespace Ezzoo {
 			}
 		}
 
+		static const ScriptFields& MonoTypeToScriptFieldType(MonoType* type)
+		{
+			std::string name = mono_type_get_name(type);
+			auto it = s_Fields.find(name);
+
+			if (it == s_Fields.end())
+				return ScriptFields::None;
+
+
+			return it->second;
+
+		}
+
+		static const char*  ScriptFieldTypeToString (ScriptFields field)
+		{
+	
+			switch (field)
+			{
+				case ScriptFields::Float:		return "Float";
+				case ScriptFields::Bool:		return "Bool";
+				case ScriptFields::Vector2:		return "Vector2";
+				case ScriptFields::Vector3:		return "Vector3";
+				case ScriptFields::Vector4:		return "Vector4";
+				case ScriptFields::Byte:		return "Byte";
+				case ScriptFields::UByte:		return "UByte";
+				case ScriptFields::Long:		return "Long";
+				case ScriptFields::ULong:		return "ULong";
+				case ScriptFields::Int:			return "Int";
+				case ScriptFields::UInt:		return "UIint";
+				case ScriptFields::Double:		return "Double";
+				case ScriptFields::Entity:		return "Entity";
+			}
+
+			return "<Invalid>";
+		}
+
 	}
 
 
@@ -109,13 +188,15 @@ namespace Ezzoo {
 		s_MonoData = new MonoData;
 
 		InitMono();
-		LoadAssembly("Resources/Scripts/Ezzoo-ScriptCore.dll");
+		LoadCoreAssembly("Scripts/Resources/Scripts/Ezzoo-ScriptCore.dll");
+		LoadAppAssembly("Scripts/Resources/Scripts/Sandbox.dll");
 		LoadAssymblyClasses();
 
 		//Instantiate Class and Call Constructor
-		s_MonoData->EntityClass = ScriptClass("Ezzoo", "Entity");
+		s_MonoData->EntityClass = ScriptClass("Ezzoo", "Entity", true);
 
 		ScriptGlue::InternalCalls();
+		ScriptGlue::RegisterComponents();
 	}
 
 	void ScriptEngine::Shutdown()
@@ -185,37 +266,57 @@ namespace Ezzoo {
 
 		s_MonoData->EntityClasses.clear();
 
-		MonoImage* image = mono_assembly_get_image(s_MonoData->CoreAssy);
-		const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(image, MONO_TABLE_TYPEDEF);
+		const MonoTableInfo* typeDefinitionsTable = mono_image_get_table_info(s_MonoData->AppAssyImage, MONO_TABLE_TYPEDEF);
 		int32_t numTypes = mono_table_info_get_rows(typeDefinitionsTable);
+		MonoClass* entityClass = mono_class_from_name(s_MonoData->CoreAssyImage, "Ezzoo", "Entity");
 
 		for (int32_t i = 0; i < numTypes; i++)
 		{
 			uint32_t cols[MONO_TYPEDEF_SIZE];
 			mono_metadata_decode_row(typeDefinitionsTable, i, cols, MONO_TYPEDEF_SIZE);
 
-			const char* nameSpace = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAMESPACE]);
-			const char* name = mono_metadata_string_heap(image, cols[MONO_TYPEDEF_NAME]);
+			const char* nameSpace = mono_metadata_string_heap(s_MonoData->AppAssyImage, cols[MONO_TYPEDEF_NAMESPACE]);
+			const char* name = mono_metadata_string_heap(s_MonoData->AppAssyImage, cols[MONO_TYPEDEF_NAME]);
 
-			MonoClass* className = mono_class_from_name(image, nameSpace, name);
-			MonoClass* entityClass = mono_class_from_name(image, "Ezzoo", "Entity");
-
-			bool isEntity = mono_class_is_subclass_of(className, entityClass, false);
 			std::string fullName;
 			if (strlen(nameSpace) != 0)
 				fullName = fmt::format("{}.{}", nameSpace, name);
 			else
 				fullName = name;
 
-			if (isEntity)
-			{
-				s_MonoData->EntityClasses[fullName] = CreateRef<ScriptClass>(nameSpace, name);
-			}
+			MonoClass* className = mono_class_from_name(s_MonoData->AppAssyImage, nameSpace, name);
 
+			if (className == entityClass)
+				continue;
+
+			bool isEntity = mono_class_is_subclass_of(className, entityClass, false);
+
+			if (!isEntity)
+				continue;
+			
+			Ref<ScriptClass> scriptClass = CreateRef<ScriptClass>(nameSpace, name);
+			s_MonoData->EntityClasses[fullName] = scriptClass;
+
+			void* fields = nullptr;
+			while (MonoClassField* field = mono_class_get_fields(className, &fields))
+			{
+				uint32_t flag = mono_field_get_flags(field);
+				if (flag & MONO_FIELD_ATTR_PUBLIC)
+				{
+					const char* name = mono_field_get_name(field);
+
+					ScriptFields type = Utils::MonoTypeToScriptFieldType(mono_field_get_type(field));
+					const char* TypeName = Utils::ScriptFieldTypeToString(type);
+
+					EZZOO_CORE_WARNING("{} - {}", name, TypeName);
+					scriptClass->m_ScriptFieldDataMap[name] = { name, type, field };
+				}
+			}
 		}
 	}
 	
-	void ScriptEngine::LoadAssembly(const std::filesystem::path& path)
+	
+	void ScriptEngine::LoadCoreAssembly(const std::filesystem::path& path)
 	{
 		s_MonoData->CoreAssy =  Utils::LoadCSharpAssembly(path.string());
 		s_MonoData->CoreAssyImage = GetImageAssy(s_MonoData->CoreAssy);
@@ -223,26 +324,43 @@ namespace Ezzoo {
 
 
 
+	void ScriptEngine::LoadAppAssembly(const std::filesystem::path& path)
+	{
+		s_MonoData->AppAssy = Utils::LoadCSharpAssembly(path.string());
+		s_MonoData->AppAssyImage = GetImageAssy(s_MonoData->AppAssy);
+	}
+
 	void ScriptEngine::OnRunTimeStart(Scene* scene)
 	{
-		m_ActiveScene = scene;
+		s_MonoData->ActiveScene = scene;
 	}
 
 	void ScriptEngine::OnRunTimeStop()
 	{
-		m_ActiveScene = nullptr;
+		s_MonoData->ActiveScene = nullptr;
 	}
 
 	void ScriptEngine::OnCreate(Entity entity)
 	{
 		const auto& sc = entity.GetComponent<ScriptComponent>();
 		const auto& idC = entity.GetComponent<IDComponent>();
+		UUID id = idC.ID;
+
 		//TODO[Ezzoo] : MonoClass* to call Instatntiation of the c# class and pass to new ScriptInstance class;
 
 		if (s_MonoData->EntityClasses[sc.ClassName] != nullptr)
 		{
 			Ref<ScriptInstance> instance = CreateRef<ScriptInstance>(s_MonoData->EntityClasses[sc.ClassName], entity);
-			s_MonoData->EntityInstances[idC.ID] = instance;
+			s_MonoData->EntityInstances[id] = instance;
+
+			if (s_MonoData->EntityFieldMap.find(id) != s_MonoData->EntityFieldMap.end())
+			{
+				const ScriptFieldMap& fieldMap = s_MonoData->EntityFieldMap.at(id);
+				for (const auto& [name, fieldInstance] : fieldMap)
+					instance->SetValueInternally(name, (void*)fieldInstance.m_Buffer);
+			}
+
+
 			instance->InvokeOnCreate();
 		}
 
@@ -260,9 +378,29 @@ namespace Ezzoo {
 		{
 			 s_MonoData->EntityInstances[idC.ID]->InvokeOnUpdate(ts);
 		}
+	}
 
+	Scene* ScriptEngine::GetActiveContext()
+	{
+		return s_MonoData->ActiveScene;
+	}
 
+	MonoImage* ScriptEngine::GetMonoImage()
+	{
+		return s_MonoData->CoreAssyImage;
+	}
 
+	
+
+	const Ref<ScriptInstance>& ScriptEngine::GetInstance(Entity entity)
+	{
+		const auto& idc = entity.GetComponent<IDComponent>();
+
+		auto it = s_MonoData->EntityInstances.find(idc.ID);
+		if (it == s_MonoData->EntityInstances.end())
+			return nullptr;
+
+		return s_MonoData->EntityInstances[idc.ID];
 	}
 
 	void ScriptEngine::ShutdownMono()
@@ -270,6 +408,7 @@ namespace Ezzoo {
 
 		s_MonoData->AppDomain = nullptr;
 		s_MonoData->CoreAssy = nullptr;
+		s_MonoData->AppAssy = nullptr;
 		s_MonoData->RootDomain = nullptr;
 	}
 
@@ -286,11 +425,28 @@ namespace Ezzoo {
 		return instance;
 	}
 
+
+	ScriptFieldMap& ScriptEngine::GetEntityFieldMap(Entity entity)
+	{
+		const auto& idC = entity.GetComponent<IDComponent>();
+		return s_MonoData->EntityFieldMap[idC.ID];
+
+	}
+
+	 Ref<ScriptClass> ScriptEngine::GetEntityClass(const std::string& className)
+	{
+		auto it = s_MonoData->EntityClasses.find(className);
+		if (it == s_MonoData->EntityClasses.end())
+			return nullptr;
+
+		return s_MonoData->EntityClasses[className];
+	}
+
 	//////////////////////////////////////////////////////////////////
-	ScriptClass::ScriptClass(const std::string& namespaceName, const std::string& className)
+	ScriptClass::ScriptClass(const std::string& namespaceName, const std::string& className, bool isCore)
 		:m_NameSpace(namespaceName), m_Name(className)
 	{
-		m_Class = mono_class_from_name(s_MonoData->CoreAssyImage, namespaceName.c_str(), className.c_str());
+		m_Class = mono_class_from_name(isCore ? s_MonoData->CoreAssyImage : s_MonoData->AppAssyImage, namespaceName.c_str(), className.c_str());
 	}
 
 	MonoMethod* ScriptClass::GetMethodByName(const std::string& methodName, int params)
@@ -307,6 +463,12 @@ namespace Ezzoo {
 	{
 		return ScriptEngine::Instantiate(m_Class);
 	}
+	const std::map<std::string, ScriptFieldData>& ScriptClass::GetFields()
+	{
+		return m_ScriptFieldDataMap;
+	}
+
+
 	///////////////////////////////////////////////////////////////
 	//ScriptInstance
 
@@ -331,17 +493,42 @@ namespace Ezzoo {
 	void ScriptInstance::InvokeOnCreate()
 	{
 		//MonoMethod* method = m_SClass->GetMethodByName("OnCreate", 0);
-		m_SClass->Invoke(m_OnCreateMethod, m_Instance, nullptr);
+
+		if (m_OnCreateMethod)
+			m_SClass->Invoke(m_OnCreateMethod, m_Instance, nullptr);
 	}
 
 	void ScriptInstance::InvokeOnUpdate(TimeStep ts)
 	{
 		//MonoMethod* method = m_SClass->GetMethodByName("OnUpdate", 1);
+		if (m_OnUpdateMethod)
+		{
+			float value = (float)ts;
+			void* param = &value;
 
-		float value = (float)ts;
-		void* param = &value;
+			m_SClass->Invoke(m_OnUpdateMethod, m_Instance, &param);
 
-		m_SClass->Invoke(m_OnUpdateMethod, m_Instance, &param);
+		}
 	}
+
+	const Ref<ScriptClass>& ScriptInstance::GetScriptClass() const 
+	{
+		return m_SClass;
+	}
+
+	void ScriptInstance::GetValueInternally(const std::string& name, void* val)
+	{
+		MonoClassField* field = m_SClass->m_ScriptFieldDataMap[name].ClassField;
+
+		mono_field_get_value(m_Instance, field, val);
+	}
+
+	void ScriptInstance::SetValueInternally(const std::string& name, const void* val)
+	{
+		MonoClassField* field = m_SClass->m_ScriptFieldDataMap[name].ClassField;
+
+		mono_field_set_value(m_Instance, field, (void*)val);
+	}
+
 
 }
